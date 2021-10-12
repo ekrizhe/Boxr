@@ -37,8 +37,8 @@ class Migration(migrations.Migration):
             name='Product',
             fields=[
                 ('GTIN_number', models.CharField(max_length=50, primary_key=True, serialize=False)),
-                ('carton_qty', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='build_pallet.carton_qty')),
-                ('color', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='build_pallet.color')),
+                ('carton_qty', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.carton_qty')),
+                ('color', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.color')),
             ],
         ),
         migrations.CreateModel(
@@ -60,23 +60,23 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.IntegerField(default=0)),
-                ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='build_pallet.product')),
-                ('pallet', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='build_pallet.pallet')),
+                ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.product')),
+                ('pallet', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.pallet')),
             ],
         ),
         migrations.AddField(
             model_name='product',
             name='size',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='build_pallet.size'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.size'),
         ),
         migrations.AddField(
             model_name='product',
             name='style',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='build_pallet.style'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.style'),
         ),
         migrations.AddField(
             model_name='pallet',
             name='items',
-            field=models.ManyToManyField(to='build_pallet.Product'),
+            field=models.ManyToManyField(to='main.Product'),
         ),
     ]

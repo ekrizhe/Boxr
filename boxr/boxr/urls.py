@@ -15,8 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('build_pallet.urls')),
+    path('', views.login, name="login"),
+    path('login', views.login, name="login"),
+    path('home', views.home, name="home"),
+    path('search/home', views.search_home),
+    path('search/item/page1', views.search_item_page1),
+    path('search/item/page2', views.search_item_page2),
+    path('search/item/page3', views.search_item_page3),
+    path('search/pallet/page1', views.search_pallet_page1),
+    path('search/pallet/page2', views.search_pallet_page2),
+    path('search/pallet/page3', views.search_pallet_page3),
+    path('search/pallet/page4', views.search_pallet_page4),
+    path('addPallet/page1', views.addPallet_page1),
+    path('addPallet/page2', views.addPallet_page2),
+    path('addPallet/page3', views.addPallet_page3),
+    path('addPallet/page4', views.addPallet_page4),
+    path('locations/page1', views.locations_page1),
+    path('restockRequest/page1', views.restockRequest_page1),
+    path('restockRequest/page2', views.restockRequest_page2),
+    path('restockRequest/page3', views.restockRequest_page3)
+
 ]
