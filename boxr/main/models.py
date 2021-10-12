@@ -40,17 +40,18 @@ class Product(models.Model):
     def __str__(self):
         return str(self.style) + " " + str(self.color) + " " + str(self.size)
 
-class Pallet(models.Model):
-    name = models.CharField(max_length=128)
-    items = models.ManyToManyField(Product)
+class Pallets(models.Model):
+    products = models.ManyToManyField(Product, through="Products_On_Pallets")
 
     def __str__(self):
-        return self.name
+        return self.pk
 
-class Product_On_Pallet(models.Model):
-    item = models.ForeignKey(Product, on_delete=models.CASCADE)
-    pallet = models.ForeignKey(Pallet, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)
+class Products_On_Pallets(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    pallet = models.ForeignKey(Pallets, on_delete=models.CASCADE)
+    qty = models.IntegerField(default=0)
 
     def __str__(self):
-        return "Pallet_ID: " + str(self.pallet.pk) + ", Item: " + str(self.item) + ", QTY: " + str(self.quantity)
+        return str(self.pallet.pk) + " " + str(self.product) + " QTY: " + str(self.qty)
+
+
