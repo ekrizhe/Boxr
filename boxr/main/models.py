@@ -44,7 +44,7 @@ class Pallets(models.Model):
     products = models.ManyToManyField(Product, through="Products_On_Pallets")
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
 class Products_On_Pallets(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
