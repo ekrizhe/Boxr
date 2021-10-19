@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from main.views import ListView
 from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,7 +24,8 @@ urlpatterns = [
     path('home', views.home, name="home"),
     path('search/home', views.search_home),
     path('search/item/page1', views.search_item_page1),
-    path('search/item/page2', views.search_item_page2),
+    path('search/item/page2', ListView.as_view(), name="view-item"),
+    path('search/item/page22', views.search_item_page2, name='view-item-2'),
     path('search/item/page3', views.search_item_page3),
     path('search/pallet/page1', views.search_pallet_page1),
     path('search/pallet/page2', views.search_pallet_page2),

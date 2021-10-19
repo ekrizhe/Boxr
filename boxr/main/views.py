@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import Style,Size,Color,Carton_QTY,Product,Pallets,Products_On_Pallets
+from django.views.generic import ListView
 
 # This will be our login screen
 def login(request):
@@ -20,9 +22,20 @@ def search_home(request):
 def search_item_page1(request):
     return render(request, 'main/search/item/page1.html')
 
+#
+class ListView(ListView):
+
+    model = Products_On_Pallets
+    template_name = 'main/search/item/page2.html'
+    context_object_name = 'products'
+    queryset = Products_On_Pallets.objects.filter(product = '00051054000027')
+    ordering = ['pallet']
+
 # Second page of the search item process
-def search_item_page2(request):
-    return render(request, 'main/search/item/page2.html')
+def search_item_page2(request, product_id):
+    p = Products_On_Pallets.objects.filter(product = product_id)
+
+    return render(request, 'main/search/item/page2.html', {'products':p})
 
 # Third page of the search item process
 def search_item_page3(request):

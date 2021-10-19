@@ -10,9 +10,12 @@
 </head>
 <body>
 <div class="container">
+    <h1>page 2</h1>
     <div class="row">
         <div class="col text-center">
-            <button class="btn btn-primary">Item page 2</button>
+            {% for p in products %}
+            <p>{{ p }}</p>
+            {% endfor %}
         </div>
     </div>
 </div>
