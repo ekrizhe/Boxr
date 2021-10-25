@@ -9,12 +9,15 @@
     <title>Title</title>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col text-center">
-            <button class="btn btn-primary">Item page 3</button>
-        </div>
-    </div>
+<div class="col text-center">
+
+
+    <form action="{% url 'search-item-save' item.pk %}", method = POST >
+        {% csrf_token %}
+        <br>
+      <label>{{ product }} {{ item.qty }}</label><br>
+      <input type="number" id="value" name="value"><br><br>
+      <input type="submit" value="Submit">
 </div>
 
 </body>

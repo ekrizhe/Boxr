@@ -10,9 +10,9 @@
 </head>
 <body>
 <div class="col text-center">
-    <a href="{% url 'view-item' %}"> test </a>
 
-    <form action="{% url 'view-item' %}" >
+
+    <form action="{% url 'view-item2' %}" method = GET>
         {% csrf_token %}
 
       <label>GTIN Number:</label><br>

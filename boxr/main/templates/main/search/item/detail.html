@@ -9,19 +9,13 @@
     <title>Title</title>
 </head>
 <body>
+<div class="main">
 
-<div class="container">
-    <h1>page 2</h1>
-    <div class="row">
-        <div class="col text-center">
-            {{ item }}
-            {% for p in products %}
-            <p>{{ p }}  <a href="{% url 'edit-item' item_id=p.id  %}"> edit </a></p>
+    <!-- Specify fields to be displayed -->
 
-            {% endfor %}
-        </div>
+    {{ product }}<br/>
+    {{ id }}
 
-    </div>
 </div>
 
 </body>

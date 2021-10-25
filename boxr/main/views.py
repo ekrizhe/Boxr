@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import render,  get_object_or_404, get_list_or_404
 from .models import Style,Size,Color,Carton_QTY,Product,Pallets,Products_On_Pallets
 from django.views.generic import ListView
 
@@ -18,28 +19,64 @@ def search_home(request):
 #===================SEARCH===========================================
 #====================================================================
 
+def search_item_detail(request,id):
+    context = {}
+    id = (str(id).rjust(14, '0'))
+    context["id"] = id
+    context["products"] = Products_On_Pallets.objects.filter(product = id)
+
+    return render(request, "main/search/item/page2.html", context)
+
 # First page of the search item process
 def search_item_page1(request):
+
     return render(request, 'main/search/item/page1.html')
 
-#
-class ListView(ListView):
-
-    model = Products_On_Pallets
-    template_name = 'main/search/item/page2.html'
-    context_object_name = 'products'
-    queryset = Products_On_Pallets.objects.filter(product = '00051054000027')
-    ordering = ['pallet']
 
 # Second page of the search item process
-def search_item_page2(request, product_id):
-    p = Products_On_Pallets.objects.filter(product = product_id)
+def search_item_page2(request):
 
-    return render(request, 'main/search/item/page2.html', {'products':p})
+    context = {}
+
+    x = request.GET['barcode']
+    try:
+        id = get_object_or_404(Product, pk=x)
+    except Http404:
+        return render(request, 'main/search/item/page1.html')
+
+    context["item"] = id
+    context['products'] = Products_On_Pallets.objects.filter(product = id)
+
+    return render(request, 'main/search/item/page2.html', context)
 
 # Third page of the search item process
-def search_item_page3(request):
-    return render(request, 'main/search/item/page3.html')
+def search_item_page3(request, item_id):
+    p = Products_On_Pallets.objects.get(id=item_id)
+
+    product = p.product
+    content = {
+        "item":p,
+        "product":product
+    }
+    return render(request, 'main/search/item/page3.html', content)
+
+def search_item_edit_value(request, item_id):
+    context = {}
+    x = request.POST['value']
+
+    pop = Products_On_Pallets.objects.get(id=item_id)
+    product = pop.product
+    id = product.pk
+    if int(x) <= 0:
+        pop.delete()
+    else:
+        pop.qty = x
+        pop.save()
+
+    #print(product.pk)
+    context["products"] = Products_On_Pallets.objects.filter(product = id)
+
+    return render(request, 'main/search/item/page2.html', context)
 
 # Third page of the search item process
 def search_pallet_page1(request):

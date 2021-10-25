@@ -55,3 +55,5 @@ class Products_On_Pallets(models.Model):
         return str(self.pallet.pk) + " " + str(self.product) + " QTY: " + str(self.qty)
 
 
+
+
