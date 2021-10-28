@@ -177,7 +177,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
 </script>
 </head>
 
-<body>
+<body style="background:black;">
   <gwd-genericad id="gwd-ad">
     <gwd-pagedeck class="gwd-page-container" id="pagedeck" data-gwd-offset-top="0px" data-gwd-offset-left="0px">
       <gwd-page id="page1" class="gwd-page-wrapper gwd-page-size gwd-lightbox gwd-page-1f4d" data-gwd-width="100%" data-gwd-height="100%">
@@ -189,18 +189,18 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <p class="gwd-p-3abl" id="dateDisp">12/31/21</p>
           <p class="gwd-p-1wya" id="userDisp">Signed in as: Matt Bishop</p>
           <gwd-image id="logoBoxr" source="{% static 'images/home/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
-          <gwd-imagebutton id="buttonSearch" up-image="{% static 'images/home/home_butt_1_1.png' %}" over-image="{% static 'images/home/home_butt_1_2.png' %}" down-image="{% static 'images/home/home_butt_1_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-1ptb"></gwd-imagebutton>
+          <gwd-imagebutton onclick="location.href = '/search/home'" id="buttonSearch" up-image="{% static 'images/home/home_butt_1_1.png' %}" over-image="{% static 'images/home/home_butt_1_2.png' %}" down-image="{% static 'images/home/home_butt_1_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-1ptb"></gwd-imagebutton>
           <gwd-imagebutton id="buttonAdd" up-image="{% static 'images/home/home_butt_2_1.png' %}" over-image="{% static 'images/home/home_butt_2_2.png' %}" down-image="{% static 'images/home/home_butt_2_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-db8f gwd-imagebutton-6u7c"></gwd-imagebutton>
           <gwd-imagebutton id="buttonFill" up-image="{% static 'images/home/home_butt_3.png' %}" over-image="{% static 'images/home/home_butt_3.png' %}" down-image="{% static 'images/home/home_butt_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-db8f gwd-imagebutton-afkv gwd-imagebutton-10d0"></gwd-imagebutton>
-          <gwd-imagebutton id="buttonLocations" up-image="{% static 'images/home/home_butt_4.png' %}" over-image="{% static 'images/home/home_butt_4.png' %}" down-image="{% static 'images/home/home_butt_4.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-db8f gwd-imagebutton-afkv gwd-imagebutton-yajp"></gwd-imagebutton><span class="gwd-span-1vxc" id="searchLabel">Search</span><span class="gwd-span-1ock" id="addLabel">Add Pallet</span><span class="gwd-span-1eao" id="fillLabel">Fill</span><span class="gwd-span-1qw9" id="locationLabel">Locations</span>
-          <gwd-image id="arrowSearch" source="{% static 'images/home/arrow_black.png' %}" scaling="stretch" class="gwd-image-1f3h gwd-image-rpcm"></gwd-image>
-          <gwd-image id="arrowLocations" source="{% static 'images/home/arrow_black.png' %}" scaling="stretch" class="gwd-image-1f3h gwd-image-f1m4"></gwd-image>
-          <gwd-image id="arrowAdd" source="{% static 'images/home/arrow_white.png' %}" scaling="stretch" class="gwd-image-1upo gwd-image-3z0j"></gwd-image>
-          <gwd-image id="arrowFill" source="{% static 'images/home/arrow_white.png' %}" scaling="stretch" class="gwd-image-1upo gwd-image-1nny"></gwd-image>
-          <gwd-image id="searchIcon" source="{% static 'images/home/search.png' %}" scaling="stretch" class="gwd-image-1s28"></gwd-image>
-          <gwd-image id="addIcon" source="{% static 'images/home/box.png' %}" scaling="stretch" class="gwd-image-7b1v"></gwd-image>
-          <gwd-image id="fillIcon" source="{% static 'images/home/pencil.png' %}" scaling="stretch" class="gwd-image-hkt2"></gwd-image>
-          <gwd-image id="locationsIcon" source="{% static 'images/home/locate.png' %}" scaling="stretch" class="gwd-image-vbod"></gwd-image>
+          <gwd-imagebutton id="buttonLocations" up-image="{% static 'images/home/home_butt_4.png' %}" over-image="{% static 'images/home/home_butt_4.png' %}" down-image="{% static 'images/home/home_butt_4.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-db8f gwd-imagebutton-afkv gwd-imagebutton-yajp"></gwd-imagebutton><span class="gwd-span-1vxc" id="searchLabel" style="pointer-events: none;">Search</span><span class="gwd-span-1ock" id="addLabel" style="pointer-events: none;">Add Pallet</span><span class="gwd-span-1eao" id="fillLabel" style="pointer-events: none;">Fill</span><span class="gwd-span-1qw9" id="locationLabel" style="pointer-events: none;">Locations</span>
+          <gwd-image id="arrowSearch" style="pointer-events: none;" source="{% static 'images/home/arrow_black.png' %}" scaling="stretch" class="gwd-image-1f3h gwd-image-rpcm"></gwd-image>
+          <gwd-image id="arrowLocations" style="pointer-events: none;" source="{% static 'images/home/arrow_black.png' %}" scaling="stretch" class="gwd-image-1f3h gwd-image-f1m4"></gwd-image>
+          <gwd-image id="arrowAdd" style="pointer-events: none;" source="{% static 'images/home/arrow_white.png' %}" scaling="stretch" class="gwd-image-1upo gwd-image-3z0j"></gwd-image>
+          <gwd-image id="arrowFill" style="pointer-events: none;" source="{% static 'images/home/arrow_white.png' %}" scaling="stretch" class="gwd-image-1upo gwd-image-1nny"></gwd-image>
+          <gwd-image id="searchIcon" style="pointer-events: none;" source="{% static 'images/home/search.png' %}" scaling="stretch" class="gwd-image-1s28"></gwd-image>
+          <gwd-image id="addIcon" style="pointer-events: none;" source="{% static 'images/home/box.png' %}" scaling="stretch" class="gwd-image-7b1v"></gwd-image>
+          <gwd-image id="fillIcon" style="pointer-events: none;" source="{% static 'images/home/pencil.png' %}" scaling="stretch" class="gwd-image-hkt2"></gwd-image>
+          <gwd-image id="locationsIcon" style="pointer-events: none;" source="{% static 'images/home/locate.png' %}" scaling="stretch" class="gwd-image-vbod"></gwd-image>
           <gwd-imagebutton id="borgerMenu" up-image="{% static 'images/home/hamborger.png' %}" over-image="{% static 'images/home/hamborger.png' %}" down-image="{% static 'images/home/hamborger.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
         </div>
       </gwd-page>
