@@ -23,6 +23,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
+<<<<<<< HEAD
+=======
+    # Home
+>>>>>>> b5b567a194e5672cc627179606eb1a48f897bbcc
     path('admin/', admin.site.urls),
     path('', views.login, name="login"),
     path('login', views.login, name="login"),

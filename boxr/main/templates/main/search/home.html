@@ -178,7 +178,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
 </script>
 </head>
 
-<body>
+<body style="background:black;">
   <gwd-genericad id="gwd-ad">
     <gwd-pagedeck class="gwd-page-container" id="pagedeck" data-gwd-offset-top="0px" data-gwd-offset-left="0px">
       <gwd-page id="page1" class="gwd-page-wrapper gwd-page-size gwd-lightbox gwd-page-1f4d" data-gwd-width="100%" data-gwd-height="100%">
@@ -188,11 +188,11 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="headerBG" source="{% static 'images/searchLanding/home_mockup_TIMEBG.png' %}" scaling="stretch" class="gwd-image-pqq6"></gwd-image>
           <p class="gwd-p-1oyb" id="versionText">2021 Team Boxr.</p>
           <gwd-image id="logoBoxr" source="{% static 'images/searchLanding/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
-          <gwd-imagebutton id="buttonBack" up-image="{% static 'images/searchLanding/backArrow.png' %}" over-image="{% static 'images/searchLanding/backArrow.png' %}" down-image="{% static 'images/searchLanding/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
+          <gwd-imagebutton onclick="location.href = '/home'" id="buttonBack" up-image="{% static 'images/searchLanding/backArrow.png' %}" over-image="{% static 'images/searchLanding/backArrow.png' %}" down-image="{% static 'images/searchLanding/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
           <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp">6:21</span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Search.</span>
           <gwd-image id="headerIcon" source="{% static 'images/searchLanding/search_1.png' %}" scaling="stretch" class="gwd-image-569z"></gwd-image>
-          <gwd-imagebutton id="searchItemButt" up-image="{% static 'images/searchLanding/butt.png' %}" over-image="{% static 'images/searchLanding/butt.png' %}" down-image="{% static 'images/searchLanding/butt.png' %}" scaling="100% 100%" class="gwd-imagebutton-122t"></gwd-imagebutton><span class="gwd-span-1m6s gwd-span-1707" id="itemButtLabel">Search by item &gt;</span>
-          <gwd-imagebutton id="searchPalletButt" up-image="{% static 'images/searchLanding/buttwhite.png' %}" over-image="{% static 'images/searchLanding/buttwhite.png' %}" down-image="{% static 'images/searchLanding/buttwhite.png' %}" scaling="100% 100%" class="gwd-imagebutton-122t gwd-imagebutton-oata"></gwd-imagebutton><span class="gwd-span-1m6s gwd-span-40f2" id="palletButtLabel">Search by pallet &gt;</span></div>
+          <gwd-imagebutton onclick="location.href = '/search/item/page1'" id="searchItemButt" up-image="{% static 'images/searchLanding/butt.png' %}" over-image="{% static 'images/searchLanding/butt.png' %}" down-image="{% static 'images/searchLanding/butt.png' %}" scaling="100% 100%" class="gwd-imagebutton-122t"></gwd-imagebutton><span class="gwd-span-1m6s gwd-span-1707" id="itemButtLabel" style="pointer-events: none;">Search by item &gt;</span>
+          <gwd-imagebutton id="searchPalletButt" up-image="{% static 'images/searchLanding/buttwhite.png' %}" over-image="{% static 'images/searchLanding/buttwhite.png' %}" down-image="{% static 'images/searchLanding/buttwhite.png' %}" scaling="100% 100%" class="gwd-imagebutton-122t gwd-imagebutton-oata"></gwd-imagebutton><span class="gwd-span-1m6s gwd-span-40f2" id="palletButtLabel" style="pointer-events: none;">Search by pallet &gt;</span></div>
       </gwd-page>
     </gwd-pagedeck>
   </gwd-genericad>
