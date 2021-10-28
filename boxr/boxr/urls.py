@@ -55,5 +55,5 @@ urlpatterns = [
     path('restockRequest/page1', views.restockRequest_page1),
     path('restockRequest/page2', views.restockRequest_page2),
     path('restockRequest/page3', views.restockRequest_page3)
-    
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
