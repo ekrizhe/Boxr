@@ -23,10 +23,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
-<<<<<<< HEAD
-=======
-    # Home
->>>>>>> b5b567a194e5672cc627179606eb1a48f897bbcc
     path('admin/', admin.site.urls),
     path('', views.login, name="login"),
     path('login', views.login, name="login"),
@@ -47,10 +43,13 @@ urlpatterns = [
     path('search/pallet/page4', views.search_pallet_page4),
 
     # Add Pallet
-    path('addPallet/page1', views.addPallet_page1),
-    path('addPallet/page2', views.addPallet_page2),
-    path('addPallet/page3', views.addPallet_page3),
-    path('addPallet/page4', views.addPallet_page4),
+    path('addPallet', views.addPallet_page1),
+    path('addPallet/add', views.addPallet_add, name="addpallet-add"),
+    path('addPallet/add/1', views.addPallet_add_item, name="addpallet-add-item"),
+    path('addPallet/add/save/<int:id>', views.addPallet_add_save, name="addpallet-add-save"),
+    path('addPallet/save', views.addPallet_save, name="addpallet-save"),
+    path('addPallet/edit', views.addPallet_edit, name="addpallet-edit"),
+    path('addPallet/location', views.addPallet_location, name="addpallet-location"),
 
     #Locations
     path('locations/page1', views.locations_page1),

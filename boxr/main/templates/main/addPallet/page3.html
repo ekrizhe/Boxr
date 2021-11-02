@@ -12,7 +12,14 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <button class="btn btn-primary">addPallet page 3</button>
+            <h1>{{ item }}</h1>
+            {% csrf_token %}
+            <form action="{% url 'addpallet-add-save' item.pk %}" method=POST>
+            {% csrf_token %}
+              <label>QTY</label><br>
+              <input type="number" id="value" name="value"><br>
+
+            </form>
         </div>
     </div>
 </div>

@@ -42,9 +42,10 @@ class Product(models.Model):
 
 class Pallets(models.Model):
     products = models.ManyToManyField(Product, through="Products_On_Pallets")
+    location = models.CharField(max_length=50, default="Floor")
 
     def __str__(self):
-        return str(self.pk)
+        return "Location: " + str(self.location) + " ID: " + str(self.pk)
 
 class Products_On_Pallets(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -52,8 +53,9 @@ class Products_On_Pallets(models.Model):
     qty = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.pallet.pk) + " " + str(self.product) + " QTY: " + str(self.qty)
+        return str(self.pallet.location) + " " + str(self.product) + " QTY: " + str(self.qty)
 
-
+    def get_location(self):
+        return str(self.pallet.location)
 
 

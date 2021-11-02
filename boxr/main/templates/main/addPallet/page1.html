@@ -12,7 +12,26 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <button class="btn btn-primary">Addpallet page 1</button>
+            <h1>New Pallet</h1>
+            {% if location == "" %}
+            <form action="{% url 'addpallet-location' %}" method=POST>
+                {% csrf_token %}
+              <label>Add Location</label><br>
+              <input type="text" id="value" name="value"><br>
+
+            </form>
+            {% else %}
+            <p>
+                {{ location }}
+            </p>
+            {% endif %}
+            {% for i,j in item %}
+            <p>Product: {{ i }} QTY: {{ j }} </p>
+
+            {% endfor %}
+            <br><a href="{% url 'addpallet-add' %}"> Add </a>
+            <a href="{% url 'addpallet-save' %}"> Save </a>
+
         </div>
     </div>
 </div>

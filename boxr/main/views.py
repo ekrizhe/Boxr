@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render,  get_object_or_404, get_list_or_404
+from django.shortcuts import render,  get_object_or_404, get_list_or_404, redirect
 from .models import Style,Size,Color,Carton_QTY,Product,Pallets,Products_On_Pallets
 from django.views.generic import ListView
 
@@ -39,6 +39,7 @@ def search_item_page2(request):
     context = {}
 
     x = request.GET['barcode']
+    x = (str(x).rjust(14, '0'))
     try:
         id = get_object_or_404(Product, pk=x)
     except Http404:
@@ -73,7 +74,6 @@ def search_item_edit_value(request, item_id):
         pop.qty = x
         pop.save()
 
-    #print(product.pk)
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
     return render(request, 'main/search/item/page2.html', context)
@@ -100,19 +100,79 @@ def search_pallet_page4(request):
 
 # Third page of the search item process
 def addPallet_page1(request):
-    return render(request, 'main/addPallet/page1.html')
+    context = {}
+    global pallet_items, location
+    pallet_items = []
+    location = ""
+    context["item"] = pallet_items
+    context["location"] = location
+
+    return render(request, 'main/addPallet/page1.html', context)
     
 # Third page of the search item process
-def addPallet_page2(request):
+def addPallet_add(request):
     return render(request, 'main/addPallet/page2.html')
 
 # Third page of the search item process
-def addPallet_page3(request):
-    return render(request, 'main/addPallet/page3.html')
+def addPallet_add_item(request):
+    context = {}
 
-# Third page of the search item process
-def addPallet_page4(request):
-    return render(request, 'main/addPallet/page4.html')
+    x = request.POST['barcode']
+    x = (str(x).rjust(14, '0'))
+
+    try:
+        item = get_object_or_404(Product, pk=x)
+    except Http404:
+        return render(request, 'main/addPallet/page2.html')
+
+    context["item"] = item
+
+
+
+    return render(request, 'main/addPallet/page3.html', context)
+
+def addPallet_edit(request):
+
+
+    return render(request, 'main/addPallet/page2.html')
+
+def addPallet_location(request):
+    context = {}
+    value = request.POST['value']
+    global location
+    location = value
+    context["item"] = pallet_items
+    context["location"] = location
+
+
+    return render(request, 'main/addPallet/page1.html', context)
+
+
+def addPallet_add_save(request, id):
+    context = {}
+    id = (str(id).rjust(14, '0'))
+    value = request.POST['value']
+    item = get_object_or_404(Product, pk=id)
+
+    pallet_items.append((item,value))
+
+    context["item"] = pallet_items
+    context["location"] = location
+    return render(request, 'main/addPallet/page1.html',context)
+
+def addPallet_save(request):
+    pallet = Pallets(location = location)
+    pallet.save()
+
+    for item in pallet_items:
+        prod = item[0]
+        value = int(item[1])
+        pop = Products_On_Pallets(product = prod, pallet=Pallets(pk=6), qty=value)
+        pop.save()
+
+
+    return redirect(home)
+
 
 #====================================================================
 #===================LOCATIONS========================================
