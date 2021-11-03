@@ -191,7 +191,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp">6:21</span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Add pallet.</span>
           <gwd-image id="headerIcon" source="{% static 'images/addpallet/page3/box.png' %}" scaling="stretch" class="gwd-image-569z"></gwd-image>
           <gwd-image id="clipboard_partial" source="{% static 'images/addpallet/page3/clipboard_partial.png' %}" scaling="stretch" class="gwd-image-1evy"></gwd-image><span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju" id="clipboardTextPalletName">{{item}}</span>
-          <form action="{% url 'addpallet-add-save' item.pk %}" method=POST>
+          <form name="bigFormThing" action="{% url 'addpallet-add-save' item.pk %}" method=POST>
             {% csrf_token %}
               <input type="number" id="value" name="value" class="gwd-input-pkyf gwd-input-9clr" placeholder="enter quantity...">
             </form>
