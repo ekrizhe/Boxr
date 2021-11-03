@@ -230,7 +230,10 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
        * fired when the document has been completely loaded and parsed.
        */
       function handleDomContentLoaded(event) {
-
+        var cd = new Date();
+        var time = cd.toLocaleTimeString('en-US', {hour12:true, hour: "numeric", minute: "numeric"});
+        document.getElementById("12hdisp").innerText = time.substring(0, time.length - 3);
+        document.getElementById("numbers").innerText = time.substring(time.length - 2, time.length).toLowerCase();
       }
 
       /**

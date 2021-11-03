@@ -48,7 +48,7 @@ def search_item_page2(request):
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(product = id)
 
-    return render(request, 'main/search/item/page2.html', context)
+    return render(request, 'main/search/item/page2results.html', context)
 
 # Third page of the search item process
 def search_item_page3(request, item_id):

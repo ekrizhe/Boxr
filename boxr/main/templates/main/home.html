@@ -184,7 +184,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
         <div class="gwd-page-content gwd-page-size">
           <gwd-image id="pageBG" source="{% static 'images/home/home_mockup_BG.png' %}" scaling="stretch" class="gwd-image-1l7d"></gwd-image>
           <gwd-image id="timebarBG" source="{% static 'images/home/home_mockup_TIMEBG.png' %}" scaling="stretch" class="gwd-image-pqq6"></gwd-image>
-          <p class="gwd-p-1hdr" id="timeDisp"><span class="gwd-span-1jqo">6:21</span><span class="gwd-span-11u8">pm</span></p>
+          <p class="gwd-p-1hdr" id="timeDisp"><span class="gwd-span-1jqo" id="time">6:21</span><span class="gwd-span-11u8" id="timeExt">pm</span></p>
           <p class="gwd-p-1oyb" id="versionText">2021 Team Boxr.</p><span class="gwd-span-1p5o" id="welcomeDisp">welcome.</span>
           <p class="gwd-p-3abl" id="dateDisp">12/31/21</p>
           <p class="gwd-p-1wya" id="userDisp">Signed in as: Matt Bishop</p>
@@ -218,6 +218,12 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
        * fired when the document has been completely loaded and parsed.
        */
       function handleDomContentLoaded(event) {
+        var cd = new Date();
+        var fullDate = (cd.getMonth() + 1) + "/" + cd.getDate() + "/" + cd.getFullYear();
+        document.getElementById("dateDisp").innerText = fullDate;
+        var time = cd.toLocaleTimeString('en-US', {hour12:true, hour: "numeric", minute: "numeric"});
+        document.getElementById("time").innerText = time.substring(0, time.length - 3);
+        document.getElementById("timeExt").innerText = time.substring(time.length - 2, time.length).toLowerCase();
 
       }
 
