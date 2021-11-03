@@ -37,10 +37,10 @@ urlpatterns = [
     path('search/item/save/<int:item_id>', views.search_item_edit_value, name='search-item-save'),
 
     # Search Pallet
-    path('search/pallet/page1', views.search_pallet_page1),
-    path('search/pallet/page2', views.search_pallet_page2),
-    path('search/pallet/page3', views.search_pallet_page3),
-    path('search/pallet/page4', views.search_pallet_page4),
+    path('search/pallet', views.search_pallet, name="searchpallet"),
+    path('search/pallet/detail', views.search_pallet_detail, name="searchpallet-detail"),
+    path('search/pallet/edit/<int:item_id>', views.search_pallet_edit, name="searchpallet-edit"),
+    path('search/pallet/save/<int:item_id>', views.search_pallet_save, name="searchpallet-save"),
 
     # Add Pallet
     path('addPallet', views.addPallet_page1),

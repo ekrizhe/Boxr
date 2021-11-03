@@ -12,7 +12,13 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <button class="btn btn-primary">pallet page 1</button>
+           <form action="{% url 'searchpallet-detail' %}", method = POST >
+                {% csrf_token %}
+                <br>
+              <label>Enter Pallet Location</label><br>
+              <input type="text" id="value" name="value"><br><br>
+              <input type="submit" value="Submit">
+            </form>
         </div>
     </div>
 </div>

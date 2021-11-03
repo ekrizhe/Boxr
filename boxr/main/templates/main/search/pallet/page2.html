@@ -12,7 +12,11 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <button class="btn btn-primary">pallet page 2</button>
+            <h1>{{ item }}</h1><br>
+            {% for p in products %}
+            <p>{{ p.product }} QTY: {{ p.qty }}  <a href="{% url 'searchpallet-edit' item_id=p.id  %}"> edit </a></p>
+
+            {% endfor %}
         </div>
     </div>
 </div>

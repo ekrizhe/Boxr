@@ -79,20 +79,54 @@ def search_item_edit_value(request, item_id):
     return render(request, 'main/search/item/page2.html', context)
 
 # Third page of the search item process
-def search_pallet_page1(request):
+def search_pallet(request):
     return render(request, 'main/search/pallet/page1.html')
     
 # Third page of the search item process
-def search_pallet_page2(request):
-    return render(request, 'main/search/pallet/page2.html')
+def search_pallet_detail(request):
+    context = {}
+
+    location = request.POST['value']
+    try:
+        id = get_object_or_404(Pallets, location=location)
+    except Http404:
+        return render(request, 'main/search/pallet/page1.html')
+
+    context["item"] = id
+    context['products'] = Products_On_Pallets.objects.filter(pallet=id)
+
+    return render(request, 'main/search/pallet/page2.html',context)
 
 # Third page of the search item process
-def search_pallet_page3(request):
-    return render(request, 'main/search/pallet/page3.html')
+def search_pallet_edit(request, item_id):
+    p = Products_On_Pallets.objects.get(id=item_id)
+
+    product = p.product
+    content = {
+        "item": p,
+        "product": product
+    }
+
+    return render(request, 'main/search/pallet/page3.html',content)
 
 # Third page of the search item process
-def search_pallet_page4(request):
-    return render(request, 'main/search/pallet/page4.html')
+def search_pallet_save(request, item_id):
+    context = {}
+    x = request.POST['value']
+
+    pop = Products_On_Pallets.objects.get(id=item_id)
+    pallet = pop.pallet
+    id = pallet.pk
+    if int(x) <= 0:
+        pop.delete()
+    else:
+        pop.qty = x
+        pop.save()
+    context["item"] = pallet
+    context["products"] = Products_On_Pallets.objects.filter(pallet=id)
+
+    return render(request, 'main/search/pallet/page2.html', context)
+
 
 #====================================================================
 #===================ADD PALLET=======================================
@@ -167,7 +201,7 @@ def addPallet_save(request):
     for item in pallet_items:
         prod = item[0]
         value = int(item[1])
-        pop = Products_On_Pallets(product = prod, pallet=Pallets(pk=6), qty=value)
+        pop = Products_On_Pallets(product = prod, pallet=pallet, qty=value)
         pop.save()
 
 
