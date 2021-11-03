@@ -25,7 +25,7 @@ def search_item_detail(request,id):
     context["id"] = id
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
-    return render(request, "main/search/item/page2.html", context)
+    return render(request, "main/search/item/page2results.html", context)
 
 # First page of the search item process
 def search_item_page1(request):
@@ -59,7 +59,7 @@ def search_item_page3(request, item_id):
         "item":p,
         "product":product
     }
-    return render(request, 'main/search/item/page3.html', content)
+    return render(request, 'main/search/item/page3New.html', content)
 
 def search_item_edit_value(request, item_id):
     context = {}
@@ -76,7 +76,7 @@ def search_item_edit_value(request, item_id):
 
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
-    return render(request, 'main/search/item/page2.html', context)
+    return render(request, 'main/search/item/page2results.html', context)
 
 # Third page of the search item process
 def search_pallet(request):
@@ -107,7 +107,7 @@ def search_pallet_edit(request, item_id):
         "product": product
     }
 
-    return render(request, 'main/search/pallet/page3.html',content)
+    return render(request, 'main/search/pallet/page3New.html',content)
 
 # Third page of the search item process
 def search_pallet_save(request, item_id):
