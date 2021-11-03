@@ -15,7 +15,7 @@ class Style(models.Model):
     style_name = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.style_id) + " - " + str(self.style_name)
+        return str(self.style_id)
 
 class Color(models.Model):
     color_id = models.IntegerField(primary_key=True)

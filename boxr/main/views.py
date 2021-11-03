@@ -74,9 +74,10 @@ def search_item_edit_value(request, item_id):
         pop.qty = x
         pop.save()
 
+    context["item"] = product
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
-    return render(request, 'main/search/item/page2.html', context)
+    return render(request, 'main/search/item/page2results.html', context)
 
 # Third page of the search item process
 def search_pallet(request):
@@ -188,6 +189,7 @@ def addPallet_add_save(request, id):
     value = request.POST['value']
     item = get_object_or_404(Product, pk=id)
 
+    global pallet_items
     pallet_items.append((item,value))
 
     context["item"] = pallet_items
