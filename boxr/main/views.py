@@ -141,11 +141,11 @@ def addPallet_page1(request):
     context["item"] = pallet_items
     context["location"] = location
 
-    return render(request, 'main/addPallet/page1.html', context)
+    return render(request, 'main/addPallet/page1New2.html', context)
     
 # Third page of the search item process
 def addPallet_add(request):
-    return render(request, 'main/addPallet/page2.html')
+    return render(request, 'main/addPallet/page2New.html')
 
 # Third page of the search item process
 def addPallet_add_item(request):
@@ -157,18 +157,18 @@ def addPallet_add_item(request):
     try:
         item = get_object_or_404(Product, pk=x)
     except Http404:
-        return render(request, 'main/addPallet/page2.html')
+        return render(request, 'main/addPallet/page2New.html')
 
     context["item"] = item
 
 
 
-    return render(request, 'main/addPallet/page3.html', context)
+    return render(request, 'main/addPallet/page3New.html', context)
 
 def addPallet_edit(request):
 
 
-    return render(request, 'main/addPallet/page2.html')
+    return render(request, 'main/addPallet/page2New.html')
 
 def addPallet_location(request):
     context = {}
@@ -179,7 +179,7 @@ def addPallet_location(request):
     context["location"] = location
 
 
-    return render(request, 'main/addPallet/page1.html', context)
+    return render(request, 'main/addPallet/page1New2.html', context)
 
 
 def addPallet_add_save(request, id):
@@ -192,7 +192,7 @@ def addPallet_add_save(request, id):
 
     context["item"] = pallet_items
     context["location"] = location
-    return render(request, 'main/addPallet/page1.html',context)
+    return render(request, 'main/addPallet/page1New2.html',context)
 
 def addPallet_save(request):
     pallet = Pallets(location = location)
