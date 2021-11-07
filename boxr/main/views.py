@@ -136,11 +136,12 @@ def search_pallet_save(request, item_id):
 # Third page of the search item process
 def addPallet_page1(request):
     context = {}
-    global pallet_items, location
-    pallet_items = []
-    location = ""
-    context["item"] = pallet_items
-    context["location"] = location
+    #create session vars
+    request.session["item"] = []
+    request.session["location"] = ""
+    #send empty vars to html
+    context["item"] = []
+    context["location"] = ""
 
     return render(request, 'main/addPallet/page1New2.html', context)
     
@@ -174,11 +175,9 @@ def addPallet_edit(request):
 def addPallet_location(request):
     context = {}
     value = request.POST['value']
-    global location
-    location = value
-    context["item"] = pallet_items
-    context["location"] = location
-
+    request.session["location"] = value
+    context["item"] = request.session["item"]
+    context["location"] = value
 
     return render(request, 'main/addPallet/page1New2.html', context)
 
@@ -188,20 +187,36 @@ def addPallet_add_save(request, id):
     id = (str(id).rjust(14, '0'))
     value = request.POST['value']
     item = get_object_or_404(Product, pk=id)
+    #Update item list
+    pallet_items = request.session["item"]
 
-    global pallet_items
-    pallet_items.append((item,value))
+    pallet_items.append((str(item),value,item.pk))
+    request.session["item"] = pallet_items
+
+    location = request.session["location"]
 
     context["item"] = pallet_items
     context["location"] = location
     return render(request, 'main/addPallet/page1New2.html',context)
 
 def addPallet_save(request):
-    pallet = Pallets(location = location)
+    location = request.session["location"]
+    pallet_items = request.session["item"]
+    #not alowed to create an empty pallet
+    if not pallet_items:
+        context = {}
+        context["item"] = pallet_items
+        context["location"] = location
+        return render(request, 'main/addPallet/page1New2.html', context)
+    #check if location was entered
+    if location:
+        pallet = Pallets(location = location)
+    else:
+        pallet = Pallets()
     pallet.save()
 
     for item in pallet_items:
-        prod = item[0]
+        prod = get_object_or_404(Product, pk=item[2])
         value = int(item[1])
         pop = Products_On_Pallets(product = prod, pallet=pallet, qty=value)
         pop.save()

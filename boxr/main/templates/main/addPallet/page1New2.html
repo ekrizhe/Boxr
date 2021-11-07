@@ -206,8 +206,8 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-imagebutton id="addButt" onclick="addPallet()" up-image="" over-image="" down-image="" scaling="cover" class="gwd-imagebutton-x6in"></gwd-imagebutton>
           <gwd-imagebutton id="saveButt" onclick="savePallet()" up-image="" over-image="" down-image="" scaling="cover" class="gwd-imagebutton-x6in gwd-imagebutton-rx4k"></gwd-imagebutton>
           <p class="gwd-p-1aym" id="searchCriteriaLabel">
-            {% for i,j in item %}
-            Product: {{ i }} QTY: {{ j }}
+            {% for i,j,k in item %}
+            Product: {{ i }} QTY: {{ j }}<br>
             {% endfor %}
           </p>
         </div>
