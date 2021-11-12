@@ -31,10 +31,11 @@ urlpatterns = [
     path('search/home', views.search_home),
 
     # Search Item
-    path('search/item/page1', views.search_item_page1),
-    path('search/item/page2', views.search_item_page2, name='view-item2'),
-    path('search/item/edit/<int:item_id>', views.search_item_page3, name='edit-item'),
-    path('search/item/<int:id>', views.search_item_detail, name='search-item-detail'),
+    path('search/item', views.search_item_intial, name='search-item-inital'),
+    path('search/item/barcode', views.search_item_getbarcode, name='search-item-getbarcode'),
+    path('search/item/SCS', views.search_item_getSCS, name='search-item-getSCS'),
+    path('search/item/<str:item_id>', views.search_item_display, name='search-item-display'),
+    path('search/item/edit/<int:item_id>', views.search_item_edit, name='edit-item'),
     path('search/item/save/<int:item_id>', views.search_item_edit_value, name='search-item-save'),
 
     # Search Pallet

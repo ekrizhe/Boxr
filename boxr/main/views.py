@@ -19,39 +19,86 @@ def search_home(request):
 #===================SEARCH===========================================
 #====================================================================
 
-def search_item_detail(request,id):
-    context = {}
-    id = (str(id).rjust(14, '0'))
-    context["id"] = id
-    context["products"] = Products_On_Pallets.objects.filter(product = id)
+"""
+def view1(request):
+    # do some stuff here
+    return HttpResponse("some html here")
 
-    return render(request, "main/search/item/page2results.html", context)
+def view2(request):
+    return view1(request)
+"""
+
+def return_to_search():
+    context = {}
+    context['style'] = Style.objects.all()
+    context['color'] = Color.objects.all()
+    context['size'] = Size.objects.all()
+
+    return context
+
+
 
 # First page of the search item process
-def search_item_page1(request):
+def search_item_intial(request):
+    context = return_to_search()
 
-    return render(request, 'main/search/item/page1.html')
+    return render(request, 'main/search/item/search_item_search.html',context)
 
-
-# Second page of the search item process
-def search_item_page2(request):
-
+# display search result
+def search_item_display(request, item_id):
     context = {}
+
+    id = get_object_or_404(Product, pk=item_id)
+
+    context["item"] = id
+    context['products'] = Products_On_Pallets.objects.filter(product=id)
+
+    request.session["current_product"] = id.pk
+
+    return render(request, 'main/search/item/search_item_display.html', context)
+
+# processes barcode
+def search_item_getbarcode(request):
 
     x = request.GET['barcode']
     x = (str(x).rjust(14, '0'))
     try:
         id = get_object_or_404(Product, pk=x)
     except Http404:
-        return render(request, 'main/search/item/page1.html')
+        context = return_to_search()
 
-    context["item"] = id
-    context['products'] = Products_On_Pallets.objects.filter(product = id)
+        return render(request, 'main/search/item/search_item_search.html', context)
 
-    return render(request, 'main/search/item/page2results.html', context)
+    gtin = id.pk
+
+    return redirect("search-item-display", item_id=gtin)
+
+# processes search by style, color, size
+def search_item_getSCS(request):
+
+    style = request.POST['styleSelect']
+    color = request.POST['colorSelect']
+    size = request.POST['sizeSelect']
+
+    if style == "" or color == "" or size == "":
+        context = return_to_search()
+        return render(request, 'main/search/item/search_item_search.html', context)
+
+    color = (str(color).rjust(3, '0'))
+
+    try:
+        id = get_object_or_404(Product, style_id=int(style), color_id=int(color),size_id=int(size))
+    except Http404:
+        context = return_to_search()
+        return render(request, 'main/search/item/search_item_search.html', context)
+
+    gtin = id.pk
+
+    return redirect("search-item-display",item_id=gtin)
+
 
 # Third page of the search item process
-def search_item_page3(request, item_id):
+def search_item_edit(request, item_id):
     p = Products_On_Pallets.objects.get(id=item_id)
 
     product = p.product
@@ -59,11 +106,14 @@ def search_item_page3(request, item_id):
         "item":p,
         "product":product
     }
-    return render(request, 'main/search/item/page3New.html', content)
+    return render(request, 'main/search/item/search_item_edit.html', content)
 
 def search_item_edit_value(request, item_id):
     context = {}
     x = request.POST['value']
+
+    if x == "":
+        return redirect("edit-item", item_id=item_id)
 
     pop = Products_On_Pallets.objects.get(id=item_id)
     product = pop.product
@@ -77,11 +127,20 @@ def search_item_edit_value(request, item_id):
     context["item"] = product
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
-    return render(request, 'main/search/item/page2results.html', context)
+    return redirect("search-item-display",item_id=id)
 
 # Third page of the search item process
 def search_pallet(request):
-    return render(request, 'main/search/pallet/page1.html')
+    context = {}
+
+    context["floor_pallets"] = Pallets.objects.filter(location="Floor")
+    floor_pallets_product = []
+    for pallet in context["floor_pallets"]:
+        product_list = Products_On_Pallets.objects.filter(pallet=pallet)
+        floor_pallets_product.append((pallet,list(product_list)))
+
+    context["floor_pallets_product"] = floor_pallets_product
+    return render(request, 'main/search/pallet/page1.html', context)
     
 # Third page of the search item process
 def search_pallet_detail(request):
@@ -91,7 +150,7 @@ def search_pallet_detail(request):
     try:
         id = get_object_or_404(Pallets, location=location)
     except Http404:
-        return render(request, 'main/search/pallet/page1.html')
+        return render(request, 'main/search/pallet/search_item_search.html')
 
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(pallet=id)
@@ -108,7 +167,7 @@ def search_pallet_edit(request, item_id):
         "product": product
     }
 
-    return render(request, 'main/search/pallet/page3New.html',content)
+    return render(request, 'main/search/pallet/page3.html',content)
 
 # Third page of the search item process
 def search_pallet_save(request, item_id):
