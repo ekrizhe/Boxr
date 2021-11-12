@@ -53,7 +53,7 @@ def search_item_display(request, item_id):
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(product=id)
 
-    request.session["current_product"] = id
+    request.session["current_product"] = id.pk
 
     return render(request, 'main/search/item/search_item_display.html', context)
 
@@ -131,7 +131,16 @@ def search_item_edit_value(request, item_id):
 
 # Third page of the search item process
 def search_pallet(request):
-    return render(request, 'main/search/pallet/search_item_search.html')
+    context = {}
+
+    context["floor_pallets"] = Pallets.objects.filter(location="Floor")
+    floor_pallets_product = []
+    for pallet in context["floor_pallets"]:
+        product_list = Products_On_Pallets.objects.filter(pallet=pallet)
+        floor_pallets_product.append((pallet,list(product_list)))
+
+    context["floor_pallets_product"] = floor_pallets_product
+    return render(request, 'main/search/pallet/page1.html', context)
     
 # Third page of the search item process
 def search_pallet_detail(request):
@@ -158,7 +167,7 @@ def search_pallet_edit(request, item_id):
         "product": product
     }
 
-    return render(request, 'main/search/pallet/search_item_edit.html',content)
+    return render(request, 'main/search/pallet/page3.html',content)
 
 # Third page of the search item process
 def search_pallet_save(request, item_id):
@@ -215,7 +224,7 @@ def addPallet_add_item(request):
 
 
 
-    return render(request, 'main/addPallet/search_item_edit.html', context)
+    return render(request, 'main/addPallet/page3New.html', context)
 
 def addPallet_edit(request):
 
