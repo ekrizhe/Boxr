@@ -19,6 +19,15 @@ def search_home(request):
 #===================SEARCH===========================================
 #====================================================================
 
+"""
+def view1(request):
+    # do some stuff here
+    return HttpResponse("some html here")
+
+def view2(request):
+    return view1(request)
+"""
+
 def return_to_search():
     context = {}
     context['style'] = Style.objects.all()
@@ -30,16 +39,26 @@ def return_to_search():
 
 
 # First page of the search item process
-def search_item_page1(request):
+def search_item_intial(request):
     context = return_to_search()
 
-    return render(request, 'main/search/item/page1.html',context)
+    return render(request, 'main/search/item/search_item_search.html',context)
 
-
-# Second page of the search item process
-def search_item_page2(request):
-
+# display search result
+def search_item_display(request, item_id):
     context = {}
+
+    id = get_object_or_404(Product, pk=item_id)
+
+    context["item"] = id
+    context['products'] = Products_On_Pallets.objects.filter(product=id)
+
+    request.session["current_product"] = id
+
+    return render(request, 'main/search/item/search_item_display.html', context)
+
+# processes barcode
+def search_item_getbarcode(request):
 
     x = request.GET['barcode']
     x = (str(x).rjust(14, '0'))
@@ -48,24 +67,22 @@ def search_item_page2(request):
     except Http404:
         context = return_to_search()
 
-        return render(request, 'main/search/item/page1.html', context)
+        return render(request, 'main/search/item/search_item_search.html', context)
 
-    context["item"] = id
-    context['products'] = Products_On_Pallets.objects.filter(product = id)
+    gtin = id.pk
 
-    return render(request, 'main/search/item/page2results.html', context)
+    return redirect("search-item-display", item_id=gtin)
 
-def search_get_item(request):
+# processes search by style, color, size
+def search_item_getSCS(request):
 
-    context = {}
-
-    style = request.GET['styleSelect']
-    color = request.GET['colorSelect']
-    size = request.GET['sizeSelect']
+    style = request.POST['styleSelect']
+    color = request.POST['colorSelect']
+    size = request.POST['sizeSelect']
 
     if style == "" or color == "" or size == "":
         context = return_to_search()
-        return render(request, 'main/search/item/page1.html', context)
+        return render(request, 'main/search/item/search_item_search.html', context)
 
     color = (str(color).rjust(3, '0'))
 
@@ -73,15 +90,15 @@ def search_get_item(request):
         id = get_object_or_404(Product, style_id=int(style), color_id=int(color),size_id=int(size))
     except Http404:
         context = return_to_search()
-        return render(request, 'main/search/item/page1.html', context)
+        return render(request, 'main/search/item/search_item_search.html', context)
 
-    context["item"] = id
-    context['products'] = Products_On_Pallets.objects.filter(product = id)
+    gtin = id.pk
 
-    return render(request, 'main/search/item/page2results.html', context)
+    return redirect("search-item-display",item_id=gtin)
+
 
 # Third page of the search item process
-def search_item_page3(request, item_id):
+def search_item_edit(request, item_id):
     p = Products_On_Pallets.objects.get(id=item_id)
 
     product = p.product
@@ -89,11 +106,14 @@ def search_item_page3(request, item_id):
         "item":p,
         "product":product
     }
-    return render(request, 'main/search/item/page3New.html', content)
+    return render(request, 'main/search/item/search_item_edit.html', content)
 
 def search_item_edit_value(request, item_id):
     context = {}
     x = request.POST['value']
+
+    if x == "":
+        return redirect("edit-item", item_id=item_id)
 
     pop = Products_On_Pallets.objects.get(id=item_id)
     product = pop.product
@@ -107,11 +127,11 @@ def search_item_edit_value(request, item_id):
     context["item"] = product
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
-    return render(request, 'main/search/item/page2results.html', context)
+    return redirect("search-item-display",item_id=id)
 
 # Third page of the search item process
 def search_pallet(request):
-    return render(request, 'main/search/pallet/page1.html')
+    return render(request, 'main/search/pallet/search_item_search.html')
     
 # Third page of the search item process
 def search_pallet_detail(request):
@@ -121,7 +141,7 @@ def search_pallet_detail(request):
     try:
         id = get_object_or_404(Pallets, location=location)
     except Http404:
-        return render(request, 'main/search/pallet/page1.html')
+        return render(request, 'main/search/pallet/search_item_search.html')
 
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(pallet=id)
@@ -138,7 +158,7 @@ def search_pallet_edit(request, item_id):
         "product": product
     }
 
-    return render(request, 'main/search/pallet/page3New.html',content)
+    return render(request, 'main/search/pallet/search_item_edit.html',content)
 
 # Third page of the search item process
 def search_pallet_save(request, item_id):
@@ -195,7 +215,7 @@ def addPallet_add_item(request):
 
 
 
-    return render(request, 'main/addPallet/page3New.html', context)
+    return render(request, 'main/addPallet/search_item_edit.html', context)
 
 def addPallet_edit(request):
 
@@ -260,14 +280,14 @@ def addPallet_save(request):
 #====================================================================
 
 def locations_page1(request):
-    return render(request, 'main/locations/page1.html')
+    return render(request, 'main/locations/search_item_search.html')
 
 #====================================================================
 #===================RESTOCK REQUEST==================================
 #====================================================================
 
 def restockRequest_page1(request):
-    return render(request, 'main/restockRequest/page1.html')
+    return render(request, 'main/restockRequest/search_item_search.html')
 
 def restockRequest_page2(request):
     return render(request, 'main/restockRequest/page2.html')
