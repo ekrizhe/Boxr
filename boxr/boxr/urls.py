@@ -40,7 +40,8 @@ urlpatterns = [
 
     # Search Pallet
     path('search/pallet', views.search_pallet, name="searchpallet"),
-    path('search/pallet/detail', views.search_pallet_detail, name="searchpallet-detail"),
+    path('search/pallet/barcode', views.search_pallet_barcode, name="searchpallet-barcode"),
+    path('search/pallet/<int:item_id>', views.search_pallet_detail, name="searchpallet-detail"),
     path('search/pallet/edit/<int:item_id>', views.search_pallet_edit, name="searchpallet-edit"),
     path('search/pallet/save/<int:item_id>', views.search_pallet_save, name="searchpallet-save"),
 

@@ -141,10 +141,19 @@ def search_pallet(request):
 
     context["floor_pallets_product"] = floor_pallets_product
     return render(request, 'main/search/pallet/page1.html', context)
-    
-# Third page of the search item process
-def search_pallet_detail(request):
+
+def search_pallet_detail(request, item_id):
     context = {}
+
+    id = get_object_or_404(Pallets, pk=item_id)
+
+    context["item"] = id
+    context['products'] = Products_On_Pallets.objects.filter(pallet=id)
+
+    return render(request, 'main/search/pallet/page2.html',context)
+
+# Third page of the search item process
+def search_pallet_barcode(request):
 
     location = request.POST['value']
     try:
@@ -152,10 +161,7 @@ def search_pallet_detail(request):
     except Http404:
         return render(request, 'main/search/pallet/search_item_search.html')
 
-    context["item"] = id
-    context['products'] = Products_On_Pallets.objects.filter(pallet=id)
-
-    return render(request, 'main/search/pallet/page2.html',context)
+    return redirect("searchpallet-detail",item_id=id.pk)
 
 # Third page of the search item process
 def search_pallet_edit(request, item_id):
@@ -182,10 +188,9 @@ def search_pallet_save(request, item_id):
     else:
         pop.qty = x
         pop.save()
-    context["item"] = pallet
-    context["products"] = Products_On_Pallets.objects.filter(pallet=id)
 
-    return render(request, 'main/search/pallet/page2.html', context)
+    return redirect("searchpallet-detail", item_id=id)
+
 
 
 #====================================================================

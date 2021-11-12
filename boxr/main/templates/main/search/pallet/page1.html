@@ -12,15 +12,14 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-           <form action="{% url 'searchpallet-detail' %}", method = POST >
+           <form action="{% url 'searchpallet-barcode' %}", method = POST >
                 {% csrf_token %}
                 <br>
               <label>Enter Pallet Location</label><br>
               <input type="text" id="value" name="value"><br><br>
             </form>
-            <!-- {% url 'searchpallet-detail' %} -->
-            <form action="", method = POST >
-                {% csrf_token %}
+
+
                 <br>
               <label>Select Pallet From Floor</label><br>
                 <style>
@@ -49,14 +48,14 @@
                             {{ p.product }}  |  QTY: {{ p.qty }}<br>
                             {% endfor %}
                         </td>
-                        <td><a href="">ID: {{ pallet.pk }}</a></td>
+                        <td><a href="{% url 'searchpallet-detail' pallet.pk %}">ID: {{ pallet.pk }}</a></td>
                     </tr>
                     {% endfor %}
 
                 </table>
 
 
-            </form>
+
         </div>
     </div>
 </div>
