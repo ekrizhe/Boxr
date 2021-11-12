@@ -42,7 +42,7 @@ class Product(models.Model):
 
 class Pallets(models.Model):
     products = models.ManyToManyField(Product, through="Products_On_Pallets")
-    location = models.CharField(max_length=50, default="Floor")
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def __str__(self):
         return "Location: " + str(self.location) + " ID: " + str(self.pk)
@@ -58,4 +58,21 @@ class Products_On_Pallets(models.Model):
     def get_location(self):
         return str(self.pallet.location)
 
+class Location(models.Model):
+    id = models.CharField(max_length=50, default="Floor")
+    pallet = models.ForeignKey(Pallets, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.id
+
+    def get_all_objects(self):
+        queryset = self.__class__.objects.all()   
+        return queryset
+
+
+class Restock(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=16)
+
+    def __str__(self):
+        return "Product: " + str(self.product) + "Quantity: " + str(self.quantity)
