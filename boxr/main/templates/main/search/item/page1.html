@@ -197,9 +197,27 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="headerIcon" source="{% static 'images/searchItem/search_1.png' %}" scaling="stretch" class="gwd-image-569z"></gwd-image>
           <span class="gwd-span-1m6s gwd-span-1707" id="searchButtLabel" style="pointer-events: none;">Search &gt;</span>
           <input type="text" id="barcode" name="barcode" class="gwd-input-pkyf gwd-input-9clr" placeholder="Input GTIN Here..." data-gwd-name="barcodeInput">
-          <select id="styleSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-i939"></select>
-          <select id="colorSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-1fs9 gwd-select-1t3z"></select>
-          <select id="sizeSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-1fs9 gwd-select-x0hk"></select>
+          </form>
+          <form action="{% url 'search-item-get-2' %}" method = GET>
+            {% csrf_token %}
+          <select id="styleSelect" name="styleSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-i939">
+            <option></option>
+            {% for s in  style%}
+            <option type="text" value={{s.style_id}}>{{ s }}</option>
+            {% endfor %}
+          </select>
+          <select id="colorSelect" name="colorSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-1fs9 gwd-select-1t3z">
+            <option></option>
+            {% for c in  color%}
+            <option type="text" value={{c.color_id}}>{{ c }}</option>
+            {% endfor %}
+          </select>
+          <select id="sizeSelect" name="sizeSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-1fs9 gwd-select-x0hk">
+            <option></option>
+            {% for s in  size%}
+            <option type="text" value={{s.size_id}}>{{ s }}</option>
+            {% endfor %}
+          </select>
           <p class="gwd-p-jz0o" id="scsLabel">Style:<br>
             <br>
             

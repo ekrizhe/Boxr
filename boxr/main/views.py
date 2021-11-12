@@ -19,18 +19,21 @@ def search_home(request):
 #===================SEARCH===========================================
 #====================================================================
 
-def search_item_detail(request,id):
+def return_to_search():
     context = {}
-    id = (str(id).rjust(14, '0'))
-    context["id"] = id
-    context["products"] = Products_On_Pallets.objects.filter(product = id)
+    context['style'] = Style.objects.all()
+    context['color'] = Color.objects.all()
+    context['size'] = Size.objects.all()
 
-    return render(request, "main/search/item/page2results.html", context)
+    return context
+
+
 
 # First page of the search item process
 def search_item_page1(request):
+    context = return_to_search()
 
-    return render(request, 'main/search/item/page1.html')
+    return render(request, 'main/search/item/page1.html',context)
 
 
 # Second page of the search item process
@@ -43,7 +46,34 @@ def search_item_page2(request):
     try:
         id = get_object_or_404(Product, pk=x)
     except Http404:
-        return render(request, 'main/search/item/page1.html')
+        context = return_to_search()
+
+        return render(request, 'main/search/item/page1.html', context)
+
+    context["item"] = id
+    context['products'] = Products_On_Pallets.objects.filter(product = id)
+
+    return render(request, 'main/search/item/page2results.html', context)
+
+def search_get_item(request):
+
+    context = {}
+
+    style = request.GET['styleSelect']
+    color = request.GET['colorSelect']
+    size = request.GET['sizeSelect']
+
+    if style == "" or color == "" or size == "":
+        context = return_to_search()
+        return render(request, 'main/search/item/page1.html', context)
+
+    color = (str(color).rjust(3, '0'))
+
+    try:
+        id = get_object_or_404(Product, style_id=int(style), color_id=int(color),size_id=int(size))
+    except Http404:
+        context = return_to_search()
+        return render(request, 'main/search/item/page1.html', context)
 
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(product = id)

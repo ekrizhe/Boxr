@@ -33,8 +33,8 @@ urlpatterns = [
     # Search Item
     path('search/item/page1', views.search_item_page1),
     path('search/item/page2', views.search_item_page2, name='view-item2'),
+    path('search/item/display', views.search_get_item, name='search-item-get-2'),
     path('search/item/edit/<int:item_id>', views.search_item_page3, name='edit-item'),
-    path('search/item/<int:id>', views.search_item_detail, name='search-item-detail'),
     path('search/item/save/<int:item_id>', views.search_item_edit_value, name='search-item-save'),
 
     # Search Pallet
