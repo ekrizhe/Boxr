@@ -61,9 +61,15 @@ class Products_On_Pallets(models.Model):
         return str(self.pallet.location)
 
 
+<<<<<<< HEAD
 class Locations(models.Model):
     name = models.CharField(max_length=50,primary_key=True)
     pallet = models.ForeignKey(Pallets, on_delete=models.DO_NOTHING)
+=======
+class Location(models.Model):
+    name = models.CharField(max_length=50,primary_key=True)
+    pallet = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+>>>>>>> b30635326b63aa558b510fd0b321f95ed74d7bf0
 
 
     def __str__(self):
