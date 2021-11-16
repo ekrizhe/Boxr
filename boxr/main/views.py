@@ -131,6 +131,8 @@ def search_item_edit_value(request, item_id):
 
 # Third page of the search item process
 def search_pallet(request):
+    request.session["pallet_pk"] = ""
+
     context = {}
 
     context["floor_pallets"] = Pallets.objects.filter(location="Floor")
@@ -140,17 +142,17 @@ def search_pallet(request):
         floor_pallets_product.append((pallet,list(product_list)))
 
     context["floor_pallets_product"] = floor_pallets_product
-    return render(request, 'main/search/pallet/page1.html', context)
+    return render(request, 'main/search/pallet/search_pallet_search.html', context)
 
 def search_pallet_detail(request, item_id):
     context = {}
-
+    request.session["pallet_pk"] = item_id
     id = get_object_or_404(Pallets, pk=item_id)
 
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(pallet=id)
 
-    return render(request, 'main/search/pallet/page2.html',context)
+    return render(request, 'main/search/pallet/search_pallet_detail.html',context)
 
 # Third page of the search item process
 def search_pallet_barcode(request):
@@ -173,7 +175,7 @@ def search_pallet_edit(request, item_id):
         "product": product
     }
 
-    return render(request, 'main/search/pallet/page3.html',content)
+    return render(request, 'main/search/pallet/search_pallet_edit.html',content)
 
 # Third page of the search item process
 def search_pallet_save(request, item_id):
@@ -191,6 +193,44 @@ def search_pallet_save(request, item_id):
 
     return redirect("searchpallet-detail", item_id=id)
 
+def search_pallet_delete(request, item_id):
+    context = {}
+    id = get_object_or_404(Pallets, pk=item_id)
+    id.delete()
+
+    return redirect("searchpallet")
+
+def search_pallet_add(request):
+    return render(request, 'main/search/pallet/search_pallet_itemadd.html')
+
+def search_pallet_additem(request):
+    context = {}
+
+    x = request.POST['barcode']
+    x = (str(x).rjust(14, '0'))
+
+    try:
+        item = get_object_or_404(Product, pk=x)
+    except Http404:
+        return render(request, 'main/search/pallet/search_pallet_itemadd.html')
+
+    context["item"] = item
+    return render(request, 'main/search/pallet/search_pallet_itemqty.html',context)
+
+
+def search_pallet_addsave(request, item_id):
+    item_id = (str(item_id).rjust(14, '0'))
+
+    id = request.session["pallet_pk"]
+    value = request.POST['value']
+    pallet = get_object_or_404(Pallets, pk=id)
+    item = get_object_or_404(Product, pk=item_id)
+
+    pop = Products_On_Pallets(product=item,pallet=pallet,qty=value)
+    pop.save()
+
+
+    return redirect("searchpallet-detail", item_id=id)
 
 
 #====================================================================

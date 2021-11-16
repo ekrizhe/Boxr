@@ -38,12 +38,16 @@ urlpatterns = [
     path('search/item/edit/<int:item_id>', views.search_item_edit, name='edit-item'),
     path('search/item/save/<int:item_id>', views.search_item_edit_value, name='search-item-save'),
 
-    # Search Pallet
+    # Search Pallet search_pallet_additem
     path('search/pallet', views.search_pallet, name="searchpallet"),
     path('search/pallet/barcode', views.search_pallet_barcode, name="searchpallet-barcode"),
     path('search/pallet/<int:item_id>', views.search_pallet_detail, name="searchpallet-detail"),
     path('search/pallet/edit/<int:item_id>', views.search_pallet_edit, name="searchpallet-edit"),
     path('search/pallet/save/<int:item_id>', views.search_pallet_save, name="searchpallet-save"),
+    path('search/pallet/delete/<int:item_id>', views.search_pallet_delete, name="searchpallet-delete"),
+    path('search/pallet/add', views.search_pallet_add, name="searchpallet-add"),
+    path('search/pallet/add/qty', views.search_pallet_additem, name="searchpallet-additem"),
+    path('search/pallet/add/<int:item_id>', views.search_pallet_addsave, name="searchpallet-addsave"),
 
     # Add Pallet
     path('addPallet', views.addPallet_page1),

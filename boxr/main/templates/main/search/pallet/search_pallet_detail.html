@@ -12,13 +12,15 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            {% csrf_token %}
-            <form action="{% url 'addpallet-add-item' %}" method=POST>
-                {% csrf_token %}
-              <label>GTIN</label><br>
-              <input type="number" id="barcode" name="barcode"><br>
+            <h1>{{ item }}</h1><br>
+            {% for p in products %}
+            <p>{{ p.product }} QTY: {{ p.qty }}  <a href="{% url 'searchpallet-edit' item_id=p.id  %}"> edit </a></p>
 
-            </form>
+            {% endfor %}
+
+            <a href="{% url 'searchpallet-add' %}">Add Product to Pallet</a><br>
+            <a href="{% url 'searchpallet-delete' item_id=item.pk  %}" item.pk>Delete Pallet</a><br>
+            <a href="{% url 'home' %}">Return Home</a><br>
         </div>
     </div>
 </div>
