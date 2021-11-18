@@ -12,7 +12,11 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
+            {% if item.locations %}
             <h1>{{ item }}</h1><br>
+            {% else %}
+            <h1>{{ item.loc }}</h1><br>
+            {% endif %}
             {% for p in products %}
             <p>{{ p.product }} QTY: {{ p.qty }}  <a href="{% url 'searchpallet-edit' item_id=p.id  %}"> edit </a></p>
 
@@ -20,6 +24,7 @@
 
             <a href="{% url 'searchpallet-add' %}">Add Product to Pallet</a><br>
             <a href="{% url 'searchpallet-delete' item_id=item.pk  %}" item.pk>Delete Pallet</a><br>
+            <a href="{% url 'home' %}">Edit Location</a><br>
             <a href="{% url 'home' %}">Return Home</a><br>
         </div>
     </div>

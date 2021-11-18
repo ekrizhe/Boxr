@@ -60,7 +60,7 @@ urlpatterns = [
 
     #Locations
     path('locations', views.locations_display, name="location-display"),
-    
+
     # Restock Requests
     path('restockRequest/page1', views.restockRequest_page1),
     path('restockRequest/page2', views.restockRequest_page2),

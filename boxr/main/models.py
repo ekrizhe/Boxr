@@ -47,6 +47,9 @@ class Pallets(models.Model):
     location = models.CharField(max_length=50, default="Floor")
 
     def __str__(self):
+        return "Location: " + str(self.locations) + " ID: " + str(self.pk)
+
+    def loc(self):
         return "Location: " + str(self.location) + " ID: " + str(self.pk)
 
 class Products_On_Pallets(models.Model):
