@@ -12,7 +12,15 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <button class="btn btn-primary">location page 1</button>
+            <br>
+        <form action="{% url 'location-add' %}", method = POST >
+        {% csrf_token %}
+        <br>
+          <label>New Pallet Location</label><br>
+          <input type="text" id="value" name="value">
+          <input type="submit" value="Submit">
+        </form>
+            
         </div>
     </div>
 </div>

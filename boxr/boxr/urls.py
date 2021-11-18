@@ -59,8 +59,8 @@ urlpatterns = [
     path('addPallet/location', views.addPallet_location, name="addpallet-location"),
 
     #Locations
-    path('locations/page1', views.locations_page1),
-
+    path('locations', views.locations_display, name="location-display"),
+    
     # Restock Requests
     path('restockRequest/page1', views.restockRequest_page1),
     path('restockRequest/page2', views.restockRequest_page2),

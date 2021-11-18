@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render,  get_object_or_404, get_list_or_404, redirect
-from .models import Style,Size,Color,Carton_QTY,Product,Pallets,Products_On_Pallets, Restock
+from .models import Style,Size,Color,Carton_QTY,Product,Pallets,Products_On_Pallets, Restock, Locations
 from django.views.generic import ListView
 
 # This will be our login screen
@@ -333,10 +333,12 @@ def addPallet_save(request):
 #===================LOCATIONS========================================
 #====================================================================
 
-def locations_page1(request):
+def locations_display(request):
     context = {}
-    #context["items"] = Location.get_all_objects()
-    return render(request, 'main/locations/page1.html', context)
+    context["location"] = Locations.objects.all().order_by('name')
+
+    return render(request, 'main/locations/locations_display.html', context)
+
 
 #====================================================================
 #===================RESTOCK REQUEST==================================
