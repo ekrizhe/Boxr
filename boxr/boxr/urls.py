@@ -29,7 +29,7 @@ urlpatterns = [
     path('login', views.login, name="login"),
     path('home', views.home, name="home"),
     path('search/home', views.search_home),
-
+    path('test', views.test, name="test"),
     # Search Item
     path('search/item', views.search_item_intial, name='search-item-inital'),
     path('search/item/barcode', views.search_item_getbarcode, name='search-item-getbarcode'),
