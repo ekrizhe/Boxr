@@ -232,6 +232,32 @@ def search_pallet_addsave(request, item_id):
 
     return redirect("searchpallet-detail", item_id=id)
 
+def search_pallet_editlocation(request):
+    context = {}
+    context["locations"] = Locations.objects.filter(pallet=None)
+    return render(request, 'main/search/pallet/search_pallet_editlocation.html', context)
+
+def search_pallet_editlocation_save(request, id):
+
+    pallet_id = request.session["pallet_pk"]
+    pallet = get_object_or_404(Pallets, pk=pallet_id)
+    pallet.location = id
+    #clear old location
+    try:
+        if pallet.locations:
+            loc = Locations.objects.get(pk=pallet.locations)
+            loc.pallet = None
+            loc.save()
+    except:
+        print("")
+    loc = Locations.objects.get(pk=id)
+    loc.pallet = pallet
+    loc.save()
+    pallet.save()
+
+
+    return redirect("searchpallet-detail", item_id=pallet_id)
+
 
 #====================================================================
 #===================ADD PALLET=======================================
@@ -279,6 +305,14 @@ def addPallet_edit(request):
 def addPallet_location(request):
     context = {}
     value = request.POST['value']
+    try:
+        loc = get_object_or_404(Locations, pk=value)
+    except Http404:
+        request.session["location"] = "Floor"
+        context["item"] = request.session["item"]
+        context["location"] = request.session["location"]
+        return render(request, 'main/addPallet/page1New2.html', context)
+
     request.session["location"] = value
     context["item"] = request.session["item"]
     context["location"] = value
@@ -305,6 +339,8 @@ def addPallet_add_save(request, id):
 
 def addPallet_save(request):
     location = request.session["location"]
+    if not location:
+        location = "Floor"
     pallet_items = request.session["item"]
     #not alowed to create an empty pallet
     if not pallet_items:
@@ -313,11 +349,17 @@ def addPallet_save(request):
         context["location"] = location
         return render(request, 'main/addPallet/page1New2.html', context)
     #check if location was entered
-    if location:
+    print((location))
+    if location != "Floor":
         pallet = Pallets(location = location)
+        pallet.save()
+        loc = Locations.objects.get(pk=location)
+        loc.pallet = pallet
+        loc.save()
     else:
         pallet = Pallets()
-    pallet.save()
+        pallet.save()
+
 
     for item in pallet_items:
         prod = get_object_or_404(Product, pk=item[2])

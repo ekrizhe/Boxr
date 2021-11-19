@@ -47,10 +47,10 @@ class Pallets(models.Model):
     location = models.CharField(max_length=50, default="Floor")
 
     def __str__(self):
-        return "Location: " + str(self.locations) + " ID: " + str(self.pk)
+        return "Location: " + str(self.location) + " ID: " + str(self.pk)
 
     def loc(self):
-        return "Location: " + str(self.location) + " ID: " + str(self.pk)
+        return "Location: " + str(self.locations) + " ID: " + str(self.pk)
 
 class Products_On_Pallets(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -67,7 +67,7 @@ class Products_On_Pallets(models.Model):
 
 class Locations(models.Model):
     name = models.CharField(max_length=50,primary_key=True)
-    pallet = models.OneToOneField(Pallets, on_delete=models.DO_NOTHING, blank=True,null=True)
+    pallet = models.OneToOneField(Pallets, on_delete=models.SET_NULL, blank=True,null=True)
 
 
 

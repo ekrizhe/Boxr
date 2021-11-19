@@ -48,6 +48,8 @@ urlpatterns = [
     path('search/pallet/add', views.search_pallet_add, name="searchpallet-add"),
     path('search/pallet/add/qty', views.search_pallet_additem, name="searchpallet-additem"),
     path('search/pallet/add/<int:item_id>', views.search_pallet_addsave, name="searchpallet-addsave"),
+    path('search/pallet/edit/location', views.search_pallet_editlocation, name="searchpallet-editlocation"),
+    path('search/pallet/edit/location/<str:id>', views.search_pallet_editlocation_save, name="searchpallet-editlocationsave"),
 
     # Add Pallet
     path('addPallet', views.addPallet_page1),
