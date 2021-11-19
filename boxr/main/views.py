@@ -158,12 +158,15 @@ def search_pallet_detail(request, item_id):
 def search_pallet_barcode(request):
 
     location = request.POST['value']
+    print(location)
     try:
-        id = get_object_or_404(Pallets, location=location)
+        id = get_object_or_404(Locations, name=location)
     except Http404:
-        return render(request, 'main/search/pallet/search_item_search.html')
+        return redirect("searchpallet")
+    if id.pallet == None:
+        return redirect("searchpallet")
 
-    return redirect("searchpallet-detail",item_id=id.pk)
+    return redirect("searchpallet-detail",item_id=id.pallet.id)
 
 # Third page of the search item process
 def search_pallet_edit(request, item_id):
