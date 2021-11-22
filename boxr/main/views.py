@@ -15,6 +15,9 @@ def home(request):
 def search_home(request):
     return render(request, 'main/search/home.html')
 
+def test(request):
+    return render(request, 'main/search/pallet/asearch.html')
+
 #====================================================================
 #===================SEARCH===========================================
 #====================================================================
