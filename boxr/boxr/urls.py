@@ -37,6 +37,7 @@ urlpatterns = [
     path('search/item/<str:item_id>', views.search_item_display, name='search-item-display'),
     path('search/item/edit/<int:item_id>', views.search_item_edit, name='edit-item'),
     path('search/item/save/<int:item_id>', views.search_item_edit_value, name='search-item-save'),
+    path('search/item/size/<int:change_type>', views.search_item_size_change, name='search-item-size-change'),
 
     # Search Pallet search_pallet_additem
     path('search/pallet', views.search_pallet, name="searchpallet"),

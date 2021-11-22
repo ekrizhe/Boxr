@@ -129,6 +129,29 @@ def search_item_edit_value(request, item_id):
 
     return redirect("search-item-display",item_id=id)
 
+
+def search_item_size_change(request, change_type):
+    item_id = request.session["current_product"]
+    item = get_object_or_404(Product, pk=item_id)
+    #if change type is 1 then the size goes up by one
+    if change_type:
+        size = item.size.pk + 1
+    else:
+        size = item.size.pk - 1
+    #if next size object exists then display else return original object
+    try:
+        new_item = get_object_or_404(Product, style_id=item.style, color_id=item.color, size_id=size)
+    except Http404:
+        return redirect("search-item-display", item_id=item_id)
+
+    return redirect("search-item-display",item_id=new_item.pk)
+
+
+
+#====================================================================
+#===================SEARCH===========================================
+#====================================================================
+
 # Third page of the search item process
 def search_pallet(request):
     request.session["pallet_pk"] = ""
