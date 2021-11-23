@@ -437,11 +437,13 @@ def locations_display(request):
 #====================================================================
 
 def restockRequest_page1(request):
-    return verifyUser(request, render(request, 'main/restockRequest/page1.html'))
+    context = {}
+    context["product"] = Product.objects.all().order_by('name')
+    return verifyUser(request, render(request, 'main/restockRequest/page1.html', context))
 
 def restockRequest_page2(request):
-    return verifyUser(request, render(request, 'main/restockRequest/page2.html'))
+    value = request.POST['value']
 
-def restockRequest_page3(request):
-    return verifyUser(request, render(request, 'main/restockRequest/page3.html'))
+    return verifyUser(request, redirect("search-item-display", item_id=value))
+
 

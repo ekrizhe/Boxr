@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\boxr",
+    "\\boxr\\main",
+    "\\boxr\\main\\templates",
+    "\\boxr\\main\\templates\\main",
+    "\\boxr\\main\\templates\\main\\addPallet",
+    "\\boxr\\main\\templates\\main\\locations",
+    "\\boxr\\main\\templates\\main\\search",
+    "\\boxr\\main\\templates\\main\\search\\item",
+    "\\boxr\\main\\templates\\main\\search\\pallet"
+  ],
+  "SelectedNode": "\\boxr\\main\\models.py",
+  "PreviewInSolutionExplorer": false
+}
