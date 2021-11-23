@@ -432,6 +432,13 @@ def locations_display(request):
     return verifyUser(request, render(request, 'main/locations/locations_display.html', context))
 
 
+def locations_edit(request):
+    context = {}
+    context["location"] = Locations.objects.all().order_by('name')
+
+    return verifyUser(request, render(request, 'main/locations/locations_display.html', context))
+
+
 #====================================================================
 #===================RESTOCK REQUEST==================================
 #====================================================================
