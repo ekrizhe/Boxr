@@ -190,7 +190,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           
           <p class="gwd-p-1wya" id="userDisp">Signed in as: {{user.first_name}} {{user.last_name}}</p>
           
-          <gwd-image id="logoBoxr" source="{% static 'images/home/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
+          <gwd-image onclick="location.href = '/home'" id="logoBoxr" source="{% static 'images/home/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
           <gwd-imagebutton onclick="location.href = '/search/home'" id="buttonSearch" up-image="{% static 'images/home/home_butt_1_1.png' %}" over-image="{% static 'images/home/home_butt_1_2.png' %}" down-image="{% static 'images/home/home_butt_1_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-1ptb"></gwd-imagebutton>
           <gwd-imagebutton id="buttonAdd" onclick="location.href = '/addPallet'" up-image="{% static 'images/home/home_butt_2_1.png' %}" over-image="{% static 'images/home/home_butt_2_2.png' %}" down-image="{% static 'images/home/home_butt_2_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-db8f gwd-imagebutton-6u7c"></gwd-imagebutton>
           <gwd-imagebutton id="buttonFill" onclick="location.href = '{% url 'restock-display' %}'" up-image="{% static 'images/home/home_butt_3.png' %}" over-image="{% static 'images/home/home_butt_3.png' %}" down-image="{% static 'images/home/home_butt_3.png' %}" scaling="100% 100%" class="gwd-imagebutton-1qgf gwd-imagebutton-32yl gwd-imagebutton-16h6 gwd-imagebutton-9ch6 gwd-imagebutton-db8f gwd-imagebutton-afkv gwd-imagebutton-10d0"></gwd-imagebutton>
@@ -203,7 +203,6 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="addIcon" style="pointer-events: none;" source="{% static 'images/home/box.png' %}" scaling="stretch" class="gwd-image-7b1v"></gwd-image>
           <gwd-image id="fillIcon" style="pointer-events: none;" source="{% static 'images/home/pencil.png' %}" scaling="stretch" class="gwd-image-hkt2"></gwd-image>
           <gwd-image id="locationsIcon" style="pointer-events: none;" source="{% static 'images/home/locate.png' %}" scaling="stretch" class="gwd-image-vbod"></gwd-image>
-          <gwd-imagebutton id="borgerMenu" up-image="{% static 'images/home/hamborger.png' %}" over-image="{% static 'images/home/hamborger.png' %}" down-image="{% static 'images/home/hamborger.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
         </div>
       </gwd-page>
     </gwd-pagedeck>

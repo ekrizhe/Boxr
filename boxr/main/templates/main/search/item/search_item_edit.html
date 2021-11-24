@@ -186,9 +186,9 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="pageBG" source="{% static 'images/addpallet/page3/home_mockup_BG.png' %}" scaling="stretch" class="gwd-image-1l7d"></gwd-image>
           <gwd-image id="headerBG" source="{% static 'images/addpallet/page3/home_mockup_TIMEBG.png' %}" scaling="stretch" class="gwd-image-pqq6"></gwd-image>
           <gwd-image id="topBar" source="{% static 'images/addpallet/page3/topBar.png' %}" scaling="stretch" class="gwd-image-1rbp"></gwd-image>
-          <gwd-image id="logoBoxr" source="{% static 'images/addpallet/page3/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
+          <gwd-image onclick="location.href = '/home'" id="logoBoxr" source="{% static 'images/addpallet/page3/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
           <gwd-imagebutton id="buttonBack" up-image="{% static 'images/addpallet/page3/backArrow.png' %}" over-image="{% static 'images/addpallet/page3/backArrow.png' %}" down-image="{% static 'images/addpallet/page3/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
-          <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp">6:21</span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Edit quantity.</span>
+          <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp"></span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Edit quantity.</span>
           <gwd-image id="headerIcon" source="{% static 'images/addpallet/page3/box.png' %}" scaling="stretch" class="gwd-image-569z"></gwd-image>
           <gwd-image id="clipboard_partial" source="{% static 'images/addpallet/page3/clipboard_partial.png' %}" scaling="stretch" class="gwd-image-1evy"></gwd-image>
           <span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju" id="clipboardTextPalletName">
@@ -223,7 +223,10 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
        * fired when the document has been completely loaded and parsed.
        */
       function handleDomContentLoaded(event) {
-
+        var cd = new Date();
+        var time = cd.toLocaleTimeString('en-US', {hour12:true, hour: "numeric", minute: "numeric"});
+        document.getElementById("12hdisp").innerText = time.substring(0, time.length - 3);
+        document.getElementById("numbers").innerText = time.substring(time.length - 2, time.length).toLowerCase();
       }
 
       /**

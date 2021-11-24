@@ -186,11 +186,11 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="pageBG" source="{% static 'images/searchPallet/page1/home_mockup_BG.png' %}" scaling="stretch" class="gwd-image-1l7d"></gwd-image>
           <gwd-image id="headerBG" source="{% static 'images/searchPallet/page1/home_mockup_TIMEBG.png' %}" scaling="stretch" class="gwd-image-pqq6"></gwd-image>
           <gwd-image id="topBar" source="{% static 'images/searchPallet/page1/topBar.png' %}" scaling="stretch" class="gwd-image-1rbp"></gwd-image>
-          <gwd-image id="logoBoxr" source="{% static 'images/searchPallet/page1/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
+          <gwd-image onclick="location.href = '/home'" id="logoBoxr" source="{% static 'images/searchPallet/page1/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
           <gwd-imagebutton id="buttonBack" up-image="{% static 'images/searchPallet/page1/backArrow.png' %}" over-image="{% static 'images/searchPallet/page1/backArrow.png' %}" down-image="{% static 'images/searchPallet/page1/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
           <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp">6:21</span><span class="gwd-span-1x1k" id="numbers">pm</span></span>
           <gwd-image id="headerIcon" source="{% static 'images/searchPallet/page1/box.png' %}" scaling="stretch" class="gwd-image-569z"></gwd-image>
-          <gwd-image id="clipboard_partial" source="{% static 'images/searchPallet/page1/clipboard_partial.png' %}" scaling="stretch" class="gwd-image-1evy"></gwd-image><span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju" id="clipboardTextPalletName">Enter Pallet Location/ID:</span>
+          <gwd-image style="pointer-events: none;" id="clipboard_partial" source="{% static 'images/searchPallet/page1/clipboard_partial.png' %}" scaling="stretch" class="gwd-image-1evy"></gwd-image><span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju" id="clipboardTextPalletName">Enter Pallet Location/ID:</span>
           <form name="bigFormThing" action="{% url 'searchpallet-barcode' %}", method = POST>
             {% csrf_token %}
           <input type="text" id="value" name="value" class="gwd-input-pkyf gwd-input-9clr" placeholder="enter location/ID">
@@ -219,7 +219,10 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
        * fired when the document has been completely loaded and parsed.
        */
       function handleDomContentLoaded(event) {
-
+        var cd = new Date();
+        var time = cd.toLocaleTimeString('en-US', {hour12:true, hour: "numeric", minute: "numeric"});
+        document.getElementById("12hdisp").innerText = time.substring(0, time.length - 3);
+        document.getElementById("numbers").innerText = time.substring(time.length - 2, time.length).toLowerCase();
       }
 
       /**

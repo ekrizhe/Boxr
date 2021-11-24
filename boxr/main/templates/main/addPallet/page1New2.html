@@ -187,9 +187,9 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="headerBG" source="{% static 'images/addpallet/home_mockup_TIMEBG.png' %}" scaling="stretch" class="gwd-image-pqq6"></gwd-image>
           <gwd-image id="clipboardBG" source="{% static 'images/addpallet/add_pallet_CB.png' %}" scaling="stretch" class="gwd-image-xy44"></gwd-image>
           <gwd-image id="topBar" source="{% static 'images/addpallet/topBar.png' %}" scaling="stretch" class="gwd-image-1rbp"></gwd-image>
-          <gwd-image id="logoBoxr" source="{% static 'images/addpallet/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
-          <gwd-imagebutton id="buttonBack" up-image="{% static 'images/addpallet/backArrow.png' %}" over-image="{% static 'images/addpallet/backArrow.png' %}" down-image="{% static 'images/addpallet/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
-          <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp">6:21</span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Add pallet.</span>
+          <gwd-image onclick="location.href = '/home'" id="logoBoxr" source="{% static 'images/addpallet/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
+          <gwd-imagebutton id="buttonBack" onclick="location.href = '/home'" up-image="{% static 'images/addpallet/backArrow.png' %}" over-image="{% static 'images/addpallet/backArrow.png' %}" down-image="{% static 'images/addpallet/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
+          <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp"></span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Add pallet.</span>
           <form action="{% url 'addpallet-location' %}" method=POST>
             {% csrf_token %}
             <input type="text" id="value" name="value", class="gwd-input-pkyf gwd-input-9clr" placeholder="enter pallet location...">
@@ -236,7 +236,10 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
        * fired when the document has been completely loaded and parsed.
        */
       function handleDomContentLoaded(event) {
-
+        var cd = new Date();
+        var time = cd.toLocaleTimeString('en-US', {hour12:true, hour: "numeric", minute: "numeric"});
+        document.getElementById("12hdisp").innerText = time.substring(0, time.length - 3);
+        document.getElementById("numbers").innerText = time.substring(time.length - 2, time.length).toLowerCase();
       }
 
       /**
