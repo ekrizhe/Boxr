@@ -165,6 +165,7 @@ def search_item_size_change(request, change_type):
 
 
 
+
 #====================================================================
 #===================SEARCH PAllET====================================
 #====================================================================
@@ -273,7 +274,7 @@ def search_pallet_addsave(request, item_id):
     pop.save()
 
 
-    return redirect("searchpallet-detail", item_id=id)
+    return verifyUser(request,redirect("searchpallet-detail", item_id=id))
 
 def search_pallet_editlocation(request):
     context = {}
@@ -467,12 +468,28 @@ def locations_display(request):
 
 def restockRequest_page1(request):
     context = {}
-    context["product"] = Product.objects.all().order_by('name')
+    context["product"] = Restock.objects.all()
     return verifyUser(request, render(request, 'main/restockRequest/page1.html', context))
 
 def restockRequest_page2(request):
-    value = request.POST['value']
+    item_id = request.session["current_product"]
+    item = get_object_or_404(Product, pk=item_id)
 
-    return verifyUser(request, redirect("search-item-display", item_id=value))
+    try:
+        get_object_or_404(Restock, product=item)
+    except Http404:
+        re = Restock(product=item)
+        re.save()
+
+    return verifyUser(request, redirect("search-item-display", item_id=item_id))
+
+def restockRequest_del(request, id):
+    item_id = id
+
+    item = get_object_or_404(Product, pk=item_id)
+    re = get_object_or_404(Restock, product=item)
+    re.delete()
+
+    return verifyUser(request, redirect("search-item-display", item_id=item_id))
 
 

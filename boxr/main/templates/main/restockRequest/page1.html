@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
+    <div class="col text-center">
 
         <label>Select Product</label><br>
                 <style>
@@ -30,24 +30,11 @@
                 <table class="col text-center">
                     <tr>
                         <th>Product</th>
-                        <th>Quantity</th>
-                        <th>ID</th>
+
                     </tr>
                     {% for p in product %}
                     <tr>
-                        <td>
-
-                            {{ p.style }}  <br>
-
-                        </td>
-
-                        <td>
-
-                            {{ p.carton_qty.quantity }}  <br>
-
-                        </td>
-
-                        <td><a href="{% url 'search_item_detail'  p.pk %}">Restock</a></td>
+                        <td><a href="{% url 'restock-del'  p.product.pk %}">{{p}}</a></td>
                     </tr>
                     {% endfor %}
                         

@@ -67,7 +67,8 @@ urlpatterns = [
     path('locations', views.locations_display, name="location-display"),
 
     # Restock Requests
-    path('restockRequest/page1', views.restockRequest_page1),
-    path('restockRequest/page2', views.restockRequest_page2),
+    path('restockRequest/page1', views.restockRequest_page1, name="restock-display"),
+    path('restockRequest/page2', views.restockRequest_page2, name="restock"),
+    path('restockRequest/del/<str:id>', views.restockRequest_del, name="restock-del"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

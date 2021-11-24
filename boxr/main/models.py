@@ -76,7 +76,6 @@ class Locations(models.Model):
 
 class Restock(models.Model):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    quantity = models.IntegerField()
 
     def __str__(self):
-        return "Product: " + str(self.product) + "Quantity: " + str(self.quantity)
+        return "Product: " + str(self.product)
