@@ -54,11 +54,13 @@ urlpatterns = [
 
     # Add Pallet
     path('addPallet', views.addPallet_page1),
+    path('addPallet/new', views.addPallet_detail, name="addPallet-detail"),
     path('addPallet/add', views.addPallet_add, name="addpallet-add"),
     path('addPallet/add/1', views.addPallet_add_item, name="addpallet-add-item"),
     path('addPallet/add/save/<int:id>', views.addPallet_add_save, name="addpallet-add-save"),
     path('addPallet/save', views.addPallet_save, name="addpallet-save"),
-    path('addPallet/edit', views.addPallet_edit, name="addpallet-edit"),
+    path('addPallet/edit/<str:id>', views.addPallet_edit, name="addpallet-edit"),
+    path('addPallet/edit/save/<str:id>', views.addPallet_edit_save, name="addpallet-edit-save"),
     path('addPallet/location', views.addPallet_location, name="addpallet-location"),
 
     #Locations

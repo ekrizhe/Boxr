@@ -19,17 +19,9 @@ def test(request):
     return render(request, 'main/search/pallet/asearch.html')
 
 #====================================================================
-#===================SEARCH===========================================
+#===================SEARCH ITEM======================================
 #====================================================================
 
-"""
-def view1(request):
-    # do some stuff here
-    return HttpResponse("some html here")
-
-def view2(request):
-    return view1(request)
-"""
 
 def return_to_search():
     context = {}
@@ -38,7 +30,6 @@ def return_to_search():
     context['size'] = Size.objects.all()
 
     return context
-
 
 
 # First page of the search item process
@@ -152,7 +143,7 @@ def search_item_size_change(request, change_type):
 
 
 #====================================================================
-#===================SEARCH===========================================
+#===================SEARCH PAllET====================================
 #====================================================================
 
 # Third page of the search item process
@@ -303,6 +294,14 @@ def addPallet_page1(request):
     context["location"] = ""
 
     return render(request, 'main/addPallet/page1New2.html', context)
+
+#
+def addPallet_detail(request):
+    context = {}
+    context["item"] = request.session["item"]
+    context["location"] = request.session["location"]
+
+    return render(request, 'main/addPallet/page1New2.html', context)
     
 # Third page of the search item process
 def addPallet_add(request):
@@ -322,38 +321,21 @@ def addPallet_add_item(request):
 
     context["item"] = item
 
+    return render(request, 'main/addPallet/addpallet_add_qty.html', context)
 
-
-    return render(request, 'main/addPallet/page3New.html', context)
-
-def addPallet_edit(request):
-
-
-    return render(request, 'main/addPallet/page2New.html')
-
-def addPallet_location(request):
-    context = {}
-    value = request.POST['value']
-    try:
-        loc = get_object_or_404(Locations, pk=value)
-    except Http404:
-        request.session["location"] = "Floor"
-        context["item"] = request.session["item"]
-        context["location"] = request.session["location"]
-        return render(request, 'main/addPallet/page1New2.html', context)
-
-    request.session["location"] = value
-    context["item"] = request.session["item"]
-    context["location"] = value
-
-    return render(request, 'main/addPallet/page1New2.html', context)
-
-
+#
 def addPallet_add_save(request, id):
     context = {}
+
     id = (str(id).rjust(14, '0'))
-    value = request.POST['value']
     item = get_object_or_404(Product, pk=id)
+    value = request.POST['value']
+
+    if value == '' or int(float(value)) <= 0:
+        context["item"] = item
+        return render(request, 'main/addPallet/addpallet_add_qty.html', context)
+    value = int(float(value))
+
     #Update item list
     pallet_items = request.session["item"]
 
@@ -364,7 +346,52 @@ def addPallet_add_save(request, id):
 
     context["item"] = pallet_items
     context["location"] = location
-    return render(request, 'main/addPallet/page1New2.html',context)
+    return redirect("addPallet-detail")
+
+def addPallet_edit(request, id):
+    context = {}
+    pallet_items = request.session["item"]
+    item = pallet_items[int(id)]
+    context["item"] = item[0]
+    context["qty"] = item[1]
+    context["pk"] = id
+    return render(request, 'main/addPallet/addpallet_edit.html',context)
+
+def addPallet_edit_save(request, id):
+    context = {}
+    pallet_items = request.session["item"]
+    item = pallet_items[int(id)]
+    value = request.POST['value']
+
+    if value == '' or int(float(value)) < 0:
+        return redirect('addpallet-edit', id)
+    value = int(float(value))
+    if value == 0:
+        del pallet_items[int(id)]
+        request.session["item"] = pallet_items
+    else:
+        item[1] = value
+        pallet_items[int(id)] = item
+        print(pallet_items[int(id)])
+        request.session["item"] = pallet_items
+
+    return redirect("addPallet-detail")
+
+def addPallet_location(request):
+    context = {}
+    value = request.POST['value']
+    try:
+        loc = get_object_or_404(Locations, pk=value)
+    except Http404:
+        request.session["location"] = "Floor"
+        return redirect("addPallet-detail")
+
+    if loc.pallet:
+        request.session["location"] = "Floor"
+    else:
+        request.session["location"] = value
+
+    return redirect("addPallet-detail")
 
 def addPallet_save(request):
     location = request.session["location"]
