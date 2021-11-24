@@ -2,21 +2,44 @@ from django.http import Http404
 from django.shortcuts import render,  get_object_or_404, get_list_or_404, redirect
 from .models import Style,Size,Color,Carton_QTY,Product,Pallets,Products_On_Pallets, Restock, Locations
 from django.views.generic import ListView
+from django.contrib.auth import authenticate, login
+
+def verifyUser(request, renderObj):
+    if(request.user is None or request.user.is_authenticated == False):
+        print("Redirecting!")
+        return redirect("/accounts/login")
+    else:
+        print("Rendering!")
+        return renderObj
 
 # This will be our login screen
-def login(request):
-    return render(request, 'main/login.html')
+def loginDirect(request):
+    if(request.user.is_authenticated == True):
+        return redirect("/home")
+    else:
+        return redirect("/accounts/login")
+    
 
 # This will be the home screen that consists of Search, Add Pallet, Locations, and Fill Requests
 def home(request):
-    return render(request, 'main/home.html')
+    if(request.user.is_authenticated == False):
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        print(username)
+        print(password)
+        user = authenticate(request, username=username, password=password)
+        if(user is not None):
+            login(request, user)
+        request.user = user
+
+    return verifyUser(request, render(request, 'main/home.html'))
 
 # This will be the screen that with the Item and Pallet buttons
 def search_home(request):
-    return render(request, 'main/search/home.html')
+    return verifyUser(request, render(request, 'main/search/home.html'))
 
 def test(request):
-    return render(request, 'main/search/pallet/asearch.html')
+    return verifyUser(request, render(request, 'main/search/pallet/asearch.html'))
 
 #====================================================================
 #===================SEARCH ITEM======================================
@@ -36,7 +59,7 @@ def return_to_search():
 def search_item_intial(request):
     context = return_to_search()
 
-    return render(request, 'main/search/item/search_item_search.html',context)
+    return verifyUser(request, render(request, 'main/search/item/search_item_search.html',context))
 
 # display search result
 def search_item_display(request, item_id):
@@ -49,7 +72,7 @@ def search_item_display(request, item_id):
 
     request.session["current_product"] = id.pk
 
-    return render(request, 'main/search/item/search_item_display.html', context)
+    return verifyUser(request, render(request, 'main/search/item/search_item_display.html', context))
 
 # processes barcode
 def search_item_getbarcode(request):
@@ -61,11 +84,11 @@ def search_item_getbarcode(request):
     except Http404:
         context = return_to_search()
 
-        return render(request, 'main/search/item/search_item_search.html', context)
+        return verifyUser(request, render(request, 'main/search/item/search_item_search.html', context))
 
     gtin = id.pk
 
-    return redirect("search-item-display", item_id=gtin)
+    return verifyUser(request, redirect("search-item-display", item_id=gtin))
 
 # processes search by style, color, size
 def search_item_getSCS(request):
@@ -76,7 +99,7 @@ def search_item_getSCS(request):
 
     if style == "" or color == "" or size == "":
         context = return_to_search()
-        return render(request, 'main/search/item/search_item_search.html', context)
+        return verifyUser(request,  render(request, 'main/search/item/search_item_search.html', context))
 
     color = (str(color).rjust(3, '0'))
 
@@ -84,11 +107,11 @@ def search_item_getSCS(request):
         id = get_object_or_404(Product, style_id=int(style), color_id=int(color),size_id=int(size))
     except Http404:
         context = return_to_search()
-        return render(request, 'main/search/item/search_item_search.html', context)
+        return verifyUser(request, render(request, 'main/search/item/search_item_search.html', context))
 
     gtin = id.pk
 
-    return redirect("search-item-display",item_id=gtin)
+    return verifyUser(request, redirect("search-item-display",item_id=gtin))
 
 
 # Third page of the search item process
@@ -100,14 +123,14 @@ def search_item_edit(request, item_id):
         "item":p,
         "product":product
     }
-    return render(request, 'main/search/item/search_item_edit.html', content)
+    return verifyUser(request, render(request, 'main/search/item/search_item_edit.html', content))
 
 def search_item_edit_value(request, item_id):
     context = {}
     x = request.POST['value']
 
     if x == "":
-        return redirect("edit-item", item_id=item_id)
+        return verifyUser(request, redirect("edit-item", item_id=item_id))
 
     pop = Products_On_Pallets.objects.get(id=item_id)
     product = pop.product
@@ -121,7 +144,7 @@ def search_item_edit_value(request, item_id):
     context["item"] = product
     context["products"] = Products_On_Pallets.objects.filter(product = id)
 
-    return redirect("search-item-display",item_id=id)
+    return verifyUser(request, redirect("search-item-display",item_id=id))
 
 
 def search_item_size_change(request, change_type):
@@ -136,9 +159,9 @@ def search_item_size_change(request, change_type):
     try:
         new_item = get_object_or_404(Product, style_id=item.style, color_id=item.color, size_id=size)
     except Http404:
-        return redirect("search-item-display", item_id=item_id)
+        return verifyUser(request, redirect("search-item-display", item_id=item_id))
 
-    return redirect("search-item-display",item_id=new_item.pk)
+    return verifyUser(request, redirect("search-item-display",item_id=new_item.pk))
 
 
 
@@ -159,7 +182,7 @@ def search_pallet(request):
         floor_pallets_product.append((pallet,list(product_list)))
 
     context["floor_pallets_product"] = floor_pallets_product
-    return render(request, 'main/search/pallet/search_pallet_search.html', context)
+    return verifyUser(request, render(request, 'main/search/pallet/search_pallet_search.html', context))
 
 def search_pallet_detail(request, item_id):
     context = {}
@@ -169,7 +192,7 @@ def search_pallet_detail(request, item_id):
     context["item"] = id
     context['products'] = Products_On_Pallets.objects.filter(pallet=id)
 
-    return render(request, 'main/search/pallet/search_pallet_detail.html',context)
+    return verifyUser(request, render(request, 'main/search/pallet/search_pallet_detail.html',context))
 
 # Third page of the search item process
 def search_pallet_barcode(request):
@@ -183,7 +206,7 @@ def search_pallet_barcode(request):
     if id.pallet == None:
         return redirect("searchpallet")
 
-    return redirect("searchpallet-detail",item_id=id.pallet.id)
+    return verifyUser(request, redirect("searchpallet-detail",item_id=id.pallet.id))
 
 # Third page of the search item process
 def search_pallet_edit(request, item_id):
@@ -195,7 +218,7 @@ def search_pallet_edit(request, item_id):
         "product": product
     }
 
-    return render(request, 'main/search/pallet/search_pallet_edit.html',content)
+    return verifyUser(request, render(request, 'main/search/pallet/search_pallet_edit.html',content))
 
 # Third page of the search item process
 def search_pallet_save(request, item_id):
@@ -221,7 +244,7 @@ def search_pallet_delete(request, item_id):
     return redirect("searchpallet")
 
 def search_pallet_add(request):
-    return render(request, 'main/search/pallet/search_pallet_itemadd.html')
+    return verifyUser(request, render(request, 'main/search/pallet/search_pallet_itemadd.html'))
 
 def search_pallet_additem(request):
     context = {}
@@ -232,10 +255,10 @@ def search_pallet_additem(request):
     try:
         item = get_object_or_404(Product, pk=x)
     except Http404:
-        return render(request, 'main/search/pallet/search_pallet_itemadd.html')
+        return verifyUser(request, render(request, 'main/search/pallet/search_pallet_itemadd.html'))
 
     context["item"] = item
-    return render(request, 'main/search/pallet/search_pallet_itemqty.html',context)
+    return verifyUser(request, render(request, 'main/search/pallet/search_pallet_itemqty.html',context))
 
 
 def search_pallet_addsave(request, item_id):
@@ -255,7 +278,7 @@ def search_pallet_addsave(request, item_id):
 def search_pallet_editlocation(request):
     context = {}
     context["locations"] = Locations.objects.filter(pallet=None)
-    return render(request, 'main/search/pallet/search_pallet_editlocation.html', context)
+    return verifyUser(request, render(request, 'main/search/pallet/search_pallet_editlocation.html', context))
 
 def search_pallet_editlocation_save(request, id):
 
@@ -286,14 +309,16 @@ def search_pallet_editlocation_save(request, id):
 # Third page of the search item process
 def addPallet_page1(request):
     context = {}
+
     #create session vars
     request.session["item"] = []
     request.session["location"] = ""
+
     #send empty vars to html
     context["item"] = []
     context["location"] = ""
 
-    return render(request, 'main/addPallet/page1New2.html', context)
+    return verifyUser(request, render(request, 'main/addPallet/page1New2.html', context))
 
 #
 def addPallet_detail(request):
@@ -301,11 +326,11 @@ def addPallet_detail(request):
     context["item"] = request.session["item"]
     context["location"] = request.session["location"]
 
-    return render(request, 'main/addPallet/page1New2.html', context)
+    return verifyUser(request, render(request, 'main/addPallet/page1New2.html', context))
     
 # Third page of the search item process
 def addPallet_add(request):
-    return render(request, 'main/addPallet/page2New.html')
+    return verifyUser(request, render(request, 'main/addPallet/page2New.html'))
 
 # Third page of the search item process
 def addPallet_add_item(request):
@@ -317,13 +342,13 @@ def addPallet_add_item(request):
     try:
         item = get_object_or_404(Product, pk=x)
     except Http404:
-        return render(request, 'main/addPallet/page2New.html')
+        return verifyUser(request, render(request, 'main/addPallet/page2New.html'))
 
     context["item"] = item
 
-    return render(request, 'main/addPallet/addpallet_add_qty.html', context)
+    return verifyUser(request, render(request, 'main/addPallet/addpallet_add_qty.html', context))
 
-#
+
 def addPallet_add_save(request, id):
     context = {}
 
@@ -333,7 +358,7 @@ def addPallet_add_save(request, id):
 
     if value == '' or int(float(value)) <= 0:
         context["item"] = item
-        return render(request, 'main/addPallet/addpallet_add_qty.html', context)
+        return verifyUser(request,render(request, 'main/addPallet/addpallet_add_qty.html', context))
     value = int(float(value))
 
     #Update item list
@@ -346,7 +371,8 @@ def addPallet_add_save(request, id):
 
     context["item"] = pallet_items
     context["location"] = location
-    return redirect("addPallet-detail")
+
+    return verifyUser(request,redirect("addPallet-detail"))
 
 def addPallet_edit(request, id):
     context = {}
@@ -355,7 +381,7 @@ def addPallet_edit(request, id):
     context["item"] = item[0]
     context["qty"] = item[1]
     context["pk"] = id
-    return render(request, 'main/addPallet/addpallet_edit.html',context)
+    return verifyUser(request,render(request, 'main/addPallet/addpallet_edit.html',context))
 
 def addPallet_edit_save(request, id):
     context = {}
@@ -375,7 +401,7 @@ def addPallet_edit_save(request, id):
         print(pallet_items[int(id)])
         request.session["item"] = pallet_items
 
-    return redirect("addPallet-detail")
+    return verifyUser(request,redirect("addPallet-detail"))
 
 def addPallet_location(request):
     context = {}
@@ -391,7 +417,8 @@ def addPallet_location(request):
     else:
         request.session["location"] = value
 
-    return redirect("addPallet-detail")
+    return verifyUser(request, redirect("addPallet-detail"))
+
 
 def addPallet_save(request):
     location = request.session["location"]
@@ -400,12 +427,8 @@ def addPallet_save(request):
     pallet_items = request.session["item"]
     #not alowed to create an empty pallet
     if not pallet_items:
-        context = {}
-        context["item"] = pallet_items
-        context["location"] = location
-        return render(request, 'main/addPallet/page1New2.html', context)
+        return verifyUser(request, redirect("addPallet-detail"))
     #check if location was entered
-    print((location))
     if location != "Floor":
         pallet = Pallets(location = location)
         pallet.save()
@@ -424,7 +447,7 @@ def addPallet_save(request):
         pop.save()
 
 
-    return redirect(home)
+    return verifyUser(request,redirect(home))
 
 
 #====================================================================
@@ -435,7 +458,7 @@ def locations_display(request):
     context = {}
     context["location"] = Locations.objects.all().order_by('name')
 
-    return render(request, 'main/locations/locations_display.html', context)
+    return verifyUser(request, render(request, 'main/locations/locations_display.html', context))
 
 
 #====================================================================
@@ -443,12 +466,13 @@ def locations_display(request):
 #====================================================================
 
 def restockRequest_page1(request):
-    
-    return render(request, 'main/restockRequest/page1.html')
+    context = {}
+    context["product"] = Product.objects.all().order_by('name')
+    return verifyUser(request, render(request, 'main/restockRequest/page1.html', context))
 
 def restockRequest_page2(request):
-    return render(request, 'main/restockRequest/page2.html')
+    value = request.POST['value']
 
-def restockRequest_page3(request):
-    return render(request, 'main/restockRequest/page3.html')
+    return verifyUser(request, redirect("search-item-display", item_id=value))
+
 

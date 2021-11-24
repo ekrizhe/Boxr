@@ -25,8 +25,8 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', views.login, name="login"),
-    path('login', views.login, name="login"),
+    path('', views.loginDirect, name="login"),
+    path('login', views.loginDirect, name="login"),
     path('home', views.home, name="home"),
     path('search/home', views.search_home),
     path('test', views.test, name="test"),
@@ -69,6 +69,5 @@ urlpatterns = [
     # Restock Requests
     path('restockRequest/page1', views.restockRequest_page1),
     path('restockRequest/page2', views.restockRequest_page2),
-    path('restockRequest/page3', views.restockRequest_page3)
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

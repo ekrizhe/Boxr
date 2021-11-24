@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
 
-        <label>Select Pallet From Floor</label><br>
+        <label>Select Product</label><br>
                 <style>
                     table {
                       font-family: arial, sans-serif;
@@ -30,18 +30,28 @@
                 <table class="col text-center">
                     <tr>
                         <th>Product</th>
-                        <th>Pallet ID</th>
+                        <th>Quantity</th>
+                        <th>ID</th>
                     </tr>
-                    {% for pallet,prod in floor_pallets_product %}
+                    {% for p in product %}
                     <tr>
                         <td>
-                            {% for p in prod %}
-                            {{ p.product }}  |  QTY: {{ p.qty }}<br>
-                            {% endfor %}
+
+                            {{ p.style }}  <br>
+
                         </td>
-                        <td><a href="{% url 'searchpallet-detail' pallet.pk %}">ID: {{ pallet.pk }}</a></td>
+
+                        <td>
+
+                            {{ p.carton_qty.quantity }}  <br>
+
+                        </td>
+
+                        <td><a href="{% url 'search_item_detail'  p.pk %}">Restock</a></td>
                     </tr>
                     {% endfor %}
+                        
+                    
 
                 </table>
 
