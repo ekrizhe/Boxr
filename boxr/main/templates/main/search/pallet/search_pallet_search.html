@@ -199,22 +199,37 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
             <input type="text" id="value" name="value" class="gwd-input-pkyf gwd-input-9clr" placeholder="input location..." data-gwd-name="barcodeInput">
           </form>
           <style>
+
             table {
-              font-family: arial, sans-serif;
+              font-family: nexalight;
               border-collapse: collapse;
               width: 100%;
-              
-              background: gray;
-              
+              background: #ffffff;
             }
 
-            td, th {
-              border: 1px solid #dddddd;
-              text-align: left;
+            .outside{
+
+            }
+
+            .outside::-webkit-scrollbar {
+              display: none;
+            }
+
+            th {
+              font-family: nexabold;
+              border: 3px solid #767676;
+              background: #3d3d3d;
+              color: #d9d9d9;
+              text-align: center;
+              padding: 8px;
+            }
+            td {
+              border: 3px solid #767676;
+              text-align: center;
               padding: 8px;
             }
         </style>
-        <div style="overflow-y: scroll; background:#ff7e44;position:absolute;width:50%;height:30%;left:25%;top:55%;">
+        <div class="outside" style="overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none; background:#d9d9d9;position:absolute;width:90%;height:30%;left:50%;top:55%;transform: translate(-50%, 0); ">
           <table>
             <tr>
                 <th>Product</th>

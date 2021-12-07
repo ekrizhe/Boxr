@@ -183,7 +183,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
     <gwd-pagedeck class="gwd-page-container" id="pagedeck" data-gwd-offset-top="0px" data-gwd-offset-left="0px">
       <gwd-page id="page1" class="gwd-page-wrapper gwd-page-size gwd-lightbox gwd-page-1f4d" data-gwd-width="100%" data-gwd-height="100%">
         <div class="gwd-page-content gwd-page-size">
-        <form action="{% url 'search-item-getbarcode' %}" method = GET>
+        <form name="bigFormThing1" action="{% url 'search-item-getbarcode' %}" method = GET>
             {% csrf_token %}
           <gwd-image id="pageBG" source="{% static 'images/searchItem/home_mockup_BG.png' %}" scaling="stretch" class="gwd-image-1l7d"></gwd-image>
           <gwd-image id="headerBG" source="{% static 'images/searchItem/home_mockup_TIMEBG.png' %}" scaling="stretch" class="gwd-image-pqq6"></gwd-image>
@@ -198,7 +198,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <span class="gwd-span-1m6s gwd-span-1707" id="searchButtLabel" style="pointer-events: none;">Search &gt;</span>
           <input type="text" id="barcode" name="barcode" class="gwd-input-pkyf gwd-input-9clr" placeholder="Input GTIN Here..." data-gwd-name="barcodeInput">
           </form>
-          <form action="{% url 'search-item-getSCS' %}" method = POST>
+          <form name="bigFormThing2" action="{% url 'search-item-getSCS' %}" method = POST>
             {% csrf_token %}
           <select id="styleSelect" name="styleSelect" class="gwd-select-1ceq gwd-select-5yql gwd-select-i939">
             <option></option>
@@ -225,7 +225,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
             
             <span class="gwd-span-oxx7">Size:</span></p>
           <gwd-imagebutton id="searchButt" onclick="submitInput()" up-image="" over-image="" down-image="" scaling="cover" class="gwd-imagebutton-13dk"></gwd-imagebutton>
-          <input id="submit-button", type="submit" value="Submit">
+          
         </form>
         </div>
       </gwd-page>
@@ -236,7 +236,17 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
   </script>
   <script>
     function submitInput(){
-      document.getElementById("submit-button").click();
+      
+      if(document.getElementById("barcode").value == ""){
+        console.log("Submitting form 2");
+        document.bigFormThing2.submit();
+      }
+      else{
+        console.log("Submitting form 1");
+        document.bigFormThing1.submit();
+      }
+      //document.bigFormThing1.submit();
+      //
     }
     </script>
   <script type="text/javascript" id="gwd-init-code">

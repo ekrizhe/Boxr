@@ -190,9 +190,10 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-imagebutton onClick="window.history.back();return false;" id="buttonBack" up-image="{% static 'images/addpallet/page3/backArrow.png' %}" over-image="{% static 'images/addpallet/page3/backArrow.png' %}" down-image="{% static 'images/addpallet/page3/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
           <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp"></span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Edit quantity.</span>
           <gwd-image id="headerIcon" source="{% static 'images/addpallet/page3/box.png' %}" scaling="stretch" class="gwd-image-569z"></gwd-image>
-          <gwd-image id="clipboard_partial" source="{% static 'images/addpallet/page3/clipboard_partial.png' %}" scaling="stretch" class="gwd-image-1evy"></gwd-image>
-          <span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju" id="clipboardTextPalletName">
-            {{ product }} | QTY: {{ item.qty }}
+          <gwd-image id="clipboard_partial" style="pointer-events: none;" source="{% static 'images/addpallet/page3/clipboard_partial.png' %}" scaling="stretch" class="gwd-image-1evy"></gwd-image>
+          <span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju" style="top:32% !important; white-space:nowrap !important" id="clipboardTextPalletName">
+            {{ product }}
+             <br>QTY: {{ item.qty }}
           </span>
           <form name="bigFormThing" action="{% url 'search-item-save' item.pk %}", method = POST >
             {% csrf_token %}
