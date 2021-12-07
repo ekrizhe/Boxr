@@ -188,7 +188,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="clipboardBG" source="{% static 'images/locations/clipboard4.png' %}" scaling="stretch" class="gwd-image-xy44"></gwd-image>
           <gwd-image id="topBar" source="{% static 'images/locations/topBar.png' %}" scaling="stretch" class="gwd-image-1rbp"></gwd-image>
           <gwd-image id="logoBoxr" source="{% static 'images/locations/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
-          <gwd-imagebutton onclick="location.href = '/home'" id="buttonBack" up-image="{% static 'images/locations/backArrow.png' %}" over-image="{% static 'images/locations/backArrow.png' %}" down-image="{% static 'images/locations/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
+          <gwd-imagebutton onClick="window.history.back();return false;" id="buttonBack" up-image="{% static 'images/locations/backArrow.png' %}" over-image="{% static 'images/locations/backArrow.png' %}" down-image="{% static 'images/locations/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
           <style>
             table {
               font-family: arial, sans-serif;

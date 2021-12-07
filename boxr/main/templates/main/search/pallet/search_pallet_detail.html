@@ -188,7 +188,7 @@ c=d.createElement("head");e.parentNode.insertBefore(c,e)}d=d.createElement("styl
           <gwd-image id="clipboardBG" source="{% static 'images/searchPallet/detail/clipboard3.png' %}" scaling="stretch" class="gwd-image-xy44"></gwd-image>
           <gwd-image id="topBar" source="{% static 'images/searchPallet/detail/topBar.png' %}" scaling="stretch" class="gwd-image-1rbp"></gwd-image>
           <gwd-image id="logoBoxr" source="{% static 'images/searchPallet/detail/home_logo.png' %}" scaling="stretch" class="gwd-image-1q3q"></gwd-image>
-          <gwd-imagebutton id="buttonBack" up-image="{% static 'images/searchPallet/detail/backArrow.png' %}" over-image="{% static 'images/searchPallet/detail/backArrow.png' %}" down-image="{% static 'images/searchPallet/detail/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
+          <gwd-imagebutton onClick="window.history.back();return false;" id="buttonBack" up-image="{% static 'images/searchPallet/detail/backArrow.png' %}" over-image="{% static 'images/searchPallet/detail/backArrow.png' %}" down-image="{% static 'images/searchPallet/detail/backArrow.png' %}" scaling="cover" class="gwd-imagebutton-4wfy"></gwd-imagebutton>
           <span class="gwd-span-l190" id="timeDispSmall"><span class="gwd-span-rbea" id="12hdisp">6:21</span><span class="gwd-span-1x1k" id="numbers">pm</span></span><span class="gwd-span-b32t" id="searchLabel">Location.</span>
           <span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju gwd-span-1w6a" id="clipboardTextPalletName">Location: {{item.locations}}</span>
           <span class="gwd-span-b32t gwd-span-cbj8 gwd-span-y8ju gwd-span-g81r" id="clipboardTextPalletName_1">ID: {{item.id}}</span>
